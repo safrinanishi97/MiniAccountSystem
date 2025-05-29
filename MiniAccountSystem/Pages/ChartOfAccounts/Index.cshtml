@@ -1,0 +1,34 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Chart of Accounts";
+}
+
+<div class="dashboard">
+    <div class="card">
+        <h3>Total Accounts</h3>
+        <p class="display-4">@Model.TotalAccounts</p>
+        <a href="/ChartOfAccounts/List" class="btn btn-primary">View All Accounts</a>
+    </div>
+    <div class="card">
+        <h3>Quick Actions</h3>
+        <a href="/ChartOfAccounts/Create" class="btn btn-success mb-2">Create New Account</a>
+        <a href="/ChartOfAccounts/List" class="btn btn-info">Manage Accounts</a>
+    </div>
+</div>
+
+<style>
+    .dashboard {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        flex: 1;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+</style>

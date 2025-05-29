@@ -22,8 +22,8 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Accounts/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudHNcSW5kZXguY3NodG1s
+[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjZXNzRGVuaWVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Admin/AssignModuleAccess.cshtml]
@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcnRPZkFjY291bnRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcnRPZkFjY291bnRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/List.cshtml]

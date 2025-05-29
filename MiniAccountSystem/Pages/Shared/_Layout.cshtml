@@ -46,12 +46,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Accounts/Index">Accounts</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/AssignModuleAccess">Assign</a>
                         </li>
                         @if (PermissionService.HasAccess(role, "ChartOfAccounts"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/ChartOfAccounts/List">Chart Of Accounts</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/ChartOfAccounts/Index">Chart Of Accounts</a>
                             </li>
                         }
 
