@@ -135,6 +135,7 @@ C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.RazorAssemblyInfo.cache
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.RazorAssemblyInfo.cs
+C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.sourcelink.json
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\staticwebassets\msbuild.MiniAccountSystem.Microsoft.AspNetCore.StaticWebAssets.props
