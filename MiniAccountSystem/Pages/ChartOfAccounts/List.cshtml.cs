@@ -61,7 +61,10 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public IActionResult OnPostDelete(int id)
         {
-            using var con = new SqlConnection("DefaultConnection");
+            string connectionString = _configuration.GetConnectionString("DefaultConnection")
+      ?? throw new ArgumentNullException("Connection string is missing!");
+
+            using var con = new SqlConnection(connectionString);
             var cmd = new SqlCommand("sp_ManageChartOfAccounts", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Action", "DELETE");

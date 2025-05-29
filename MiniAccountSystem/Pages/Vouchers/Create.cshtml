@@ -22,7 +22,12 @@
         <label>Date</label>
         <input asp-for="VoucherDate" type="date" class="form-control" />
     </div>
+    <div class="form-group">
+        <button type="button" id="addEntry" class="btn btn-secondary">Add Entry</button>
+        <button type="button" id="removeEntry" class="btn btn-danger">Remove Last</button>
+    </div>
 
+  
     <h4>Voucher Entries</h4>
     <table class="table">
         <thead>
@@ -51,3 +56,55 @@
     </table>
     <button type="submit" class="btn btn-primary">Save Voucher</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Client-side validation
+        $("form").submit(function(e) {
+            let isValid = true;
+            $("tbody tr").each(function() {
+                const debit = parseFloat($(this).find("[name*='DebitAmount']").val()) || 0;
+                const credit = parseFloat($(this).find("[name*='CreditAmount']").val()) || 0;
+
+                if (debit > 0 && credit > 0) {
+                    alert("An entry cannot have both debit and credit amounts!");
+                    isValid = false;
+                    return false;
+                }
+            });
+            return isValid;
+        });
+
+        // Dynamic row management
+        document.getElementById('addEntry').addEventListener('click', function() {
+            const index = document.querySelectorAll('tbody tr').length;
+            const template = `
+                <tr>
+                    <td>
+                        <select name="Entries[${index}].AccountId" class="form-control">
+        @foreach (var item in Model.AccountList)
+        {
+                                    <option value="@item.Value">@item.Text</option>
+        }
+                        </select>
+                    </td>
+                    <td>
+                        <input name="Entries[${index}].DebitAmount" class="form-control" />
+                    </td>
+                    <td>
+                        <input name="Entries[${index}].CreditAmount" class="form-control" />
+                    </td>
+                </tr>`;
+            document.querySelector('tbody').insertAdjacentHTML('beforeend', template);
+        });
+
+        document.getElementById('removeEntry').addEventListener('click', function() {
+            const rows = document.querySelectorAll('tbody tr');
+            if (rows.length > 1) { // Keep at least one row
+                rows[rows.length - 1].remove();
+            }
+        });
+    </script>
+}

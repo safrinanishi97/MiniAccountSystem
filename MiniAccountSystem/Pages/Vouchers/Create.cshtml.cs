@@ -19,7 +19,8 @@ namespace MiniAccountSystem.Pages.Vouchers
         public string ReferenceNo { get; set; }
 
         [BindProperty]
-        public DateTime VoucherDate { get; set; }
+        public DateTime VoucherDate { get; set; } = DateTime.Today;
+
 
         [BindProperty]
         public List<VoucherEntry> Entries { get; set; } = new()
@@ -27,25 +28,62 @@ namespace MiniAccountSystem.Pages.Vouchers
         new VoucherEntry(), new VoucherEntry() // 2 default rows
     };
 
-        public List<SelectListItem> AccountList { get; set; }
+        public SelectList AccountList { get; set; }
 
         public async Task OnGetAsync()
         {
-            AccountList = new List<SelectListItem>();
-            using SqlConnection con = new(_configuration.GetConnectionString("DefaultConnection"));
-            using SqlCommand cmd = new("SELECT Id, Name FROM ChartOfAccounts", con);
-
-            await con.OpenAsync();
-            var reader = await cmd.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
+            Entries = new List<VoucherEntry>
             {
-                AccountList.Add(new SelectListItem(reader["Name"].ToString(), reader["Id"].ToString()));
+                new VoucherEntry(),
+                new VoucherEntry()
+            };
+
+            AccountList = new SelectList(GetAccountsFromDB(), "Id", "Name");
+        }
+
+        private List<ChartOfAccount> GetAccountsFromDB()
+        {
+            var accounts = new List<ChartOfAccount>();
+            string connectionString = _configuration.GetConnectionString("DefaultConnection")
+            ?? throw new ArgumentNullException("Connection string is missing!");
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts", connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        accounts.Add(new ChartOfAccount
+                        {
+                            Id = (int)reader["Id"],
+                            Name = reader["Name"].ToString()
+                        });
+                    }
+                }
             }
-            con.Close();
+
+            return accounts;
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (Entries == null || Entries.Count < 2)
+            {
+                ModelState.AddModelError("", "At least two entries required");
+                return Page();
+            }
+
+            decimal totalDebit = Entries.Sum(e => e.DebitAmount);
+            decimal totalCredit = Entries.Sum(e => e.CreditAmount);
+
+            if (totalDebit != totalCredit)
+            {
+                ModelState.AddModelError("", "Total debits must equal total credits");
+                return Page();
+            }
+
             DataTable entryTable = new();
             entryTable.Columns.Add("AccountId", typeof(int));
             entryTable.Columns.Add("DebitAmount", typeof(decimal));

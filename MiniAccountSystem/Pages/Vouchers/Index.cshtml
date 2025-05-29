@@ -3,5 +3,33 @@
 @{
     ViewData["Title"] = "Voucher Entry";
 }
-<h2>Voucher Entry</h2>
-<p>This is your chart of voucher management page.</p>
+<div class="voucher-dashboard">
+    <div class="card">
+        <h3>Voucher Actions</h3>
+        <a asp-page="/ChartOfAccounts/Create" class="btn btn-success mb-2">Create New Voucher</a>
+   
+    </div>
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Accountant"))
+    {
+        <div class="card">
+            <h3>Quick Reports</h3>
+            <a asp-page="./Reports/Daily" class="btn btn-info">Daily Vouchers</a>
+        </div>
+    }
+</div>
+
+<style>
+    .voucher-dashboard {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .card {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        min-width: 250px;
+    }
+</style>

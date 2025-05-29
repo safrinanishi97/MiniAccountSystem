@@ -1,41 +1,80 @@
 ﻿@page
-@model MiniAccountSystem.Pages.ChartOfAccounts.ListModel
 @using MiniAccountSystem.Models
+@model MiniAccountSystem.Pages.ChartOfAccounts.ListModel
 @{
+    ViewData["Title"] = "Chart of Accounts";
 }
+
+<style>
+    .tree-view {
+        padding-left: 20px;
+    }
+
+    .tree-item {
+        position: relative;
+    }
+
+        .tree-item:before {
+            content: "";
+            position: absolute;
+            left: -15px;
+            top: 0;
+            border-left: 1px solid #ccc;
+            height: 100%;
+        }
+
+        .tree-item:after {
+            content: "";
+            position: absolute;
+            left: -15px;
+            top: 15px;
+            border-top: 1px solid #ccc;
+            width: 15px;
+        }
+</style>
 
 <h2>Chart of Accounts</h2>
 <a href="Create" class="btn btn-success mb-3">Add Account</a>
 
-<table class="table table-bordered">
-    <thead>
-        <tr><th>Name</th><th>Parent</th><th>Actions</th></tr>
-    </thead>
-    <tbody>
-        @{
-            await RenderTree(Model.Accounts, null, 0);
-        }
-    </tbody>
-</table>
+<div class="tree-view">
+    @RenderAccountTree(Model.Accounts, null, 0)
+</div>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
 
 @functions {
-    public async Task RenderTree(List<ChartOfAccount> accounts, int? parentId, int level)
+    public Microsoft.AspNetCore.Html.IHtmlContent RenderAccountTree(List<ChartOfAccount> accounts, int? parentId, int level)
     {
-        var children = accounts.Where(a => a.ParentId == parentId).ToList();
-        foreach (var acc in children)
-        {
-            <tr>
-                <td>@Html.Raw(new string('-', level * 4)) @acc.Name</td>
-                <td>@(accounts.FirstOrDefault(p => p.Id == acc.ParentId)?.Name ?? "None")</td>
-                <td>
-                    <a href="Edit?id=@acc.Id" class="btn btn-primary btn-sm">Edit</a>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@acc.Id" style="display:inline;">
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
+        var children = accounts.Where(a => a.ParentId == parentId).OrderBy(a => a.Name).ToList();
 
-            await RenderTree(accounts, acc.Id, level + 1);
+        if (!children.Any() && level == 0)
+        {
+            return Html.Raw("<div>No accounts found</div>");
         }
+
+        var html = new System.Text.StringBuilder();
+
+        foreach (var account in children)
+        {
+            html.Append($@"
+                <div class='tree-item' style='margin-left:{level * 20}px'>
+                    <div class='d-flex justify-content-between align-items-center'>
+                        <span>{account.Name}</span>
+                        <div>
+                            <a href='Edit?id={account.Id}' class='btn btn-sm btn-primary'>Edit</a>
+                            <form method='post' asp-page-handler='Delete' asp-route-id='{account.Id}' style='display:inline'>
+                                <button type='submit' class='btn btn-sm btn-danger' onclick='return confirm(""Are you sure?"")'>Delete</button>
+                            </form>
+                        </div>
+                    </div>
+            ");
+
+            html.Append(RenderAccountTree(accounts, account.Id, level + 1));
+            html.Append("</div>");
+        }
+
+        return Html.Raw(html.ToString());
     }
 }

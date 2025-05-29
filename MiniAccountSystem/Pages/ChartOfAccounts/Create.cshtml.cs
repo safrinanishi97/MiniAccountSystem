@@ -21,7 +21,7 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public void OnGet()
         {
-            // Load all accounts to show as potential parents
+            ParentAccounts = new List<ChartOfAccount>();
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
             ?? throw new ArgumentNullException("Connection string is missing!");
             using var con = new SqlConnection(connectionString);
@@ -41,7 +41,11 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public IActionResult OnPost()
         {
-            using var con = new SqlConnection("DefaultConnection");
+            if (!ModelState.IsValid)
+                return Page();
+            string connectionString = _configuration.GetConnectionString("DefaultConnection")
+     ?? throw new ArgumentNullException("Connection string is missing!");
+            using var con = new SqlConnection(connectionString);
             var cmd = new SqlCommand("sp_ManageChartOfAccounts", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Action", "CREATE");
@@ -50,6 +54,8 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
             con.Open();
             cmd.ExecuteNonQuery();
+
+            TempData["SuccessMessage"] = "Account created successfully!";
             return RedirectToPage("List");
         }
     }
