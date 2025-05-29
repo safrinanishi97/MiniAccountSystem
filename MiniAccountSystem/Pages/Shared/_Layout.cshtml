@@ -45,9 +45,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/AssignModuleAccess">Assign</a>
-                        </li>
+                        
                         @if (PermissionService.HasAccess(role, "ChartOfAccounts"))
                         {
                             <li class="nav-item">
@@ -78,7 +76,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - MiniAccountSystem - <a asp-area="" asp-page="/Privacy">Privacy</a>
+           &copy; @DateTime.Now.Year - Safrina Akter - All Rights Reserved
         </div>
     </footer>
 

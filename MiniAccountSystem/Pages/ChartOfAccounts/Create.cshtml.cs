@@ -25,7 +25,9 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
             ?? throw new ArgumentNullException("Connection string is missing!");
             using var con = new SqlConnection(connectionString);
-            var cmd = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts", con);
+            var cmd = new SqlCommand(@"SELECT Id, Name FROM ChartOfAccounts 
+                             WHERE ParentId IS NULL
+                             ORDER BY Name", con);
             con.Open();
             var reader = cmd.ExecuteReader();
             ParentAccounts = new();

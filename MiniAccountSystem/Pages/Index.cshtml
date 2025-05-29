@@ -1,10 +1,89 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Mini Account System";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Welcome to Mini Account System</h1>
+                <p class="lead mb-4">Streamline your financial management with our powerful accounting solution</p>
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-lg-start">
+                    <a class="btn btn-outline-primary btn-lg px-4 gap-3" href="/Admin/AssignModuleAccess">Assign Module Access</a>
+                    <a class="btn btn-outline-secondary btn-lg px-4 gap-3" href="/ChartOfAccounts/Index">Chart of Accounts</a>
+                    <a class="btn btn-outline-primary btn-lg px-4" href="/Vouchers/Index">Voucher Entry</a>
+                </div>
+            </div>
+            @* <div class="col-lg-6"> *@
+            @*     <img src="https://via.placeholder.com/600x400" alt="Accounting Dashboard" class="img-fluid rounded shadow"> *@
+            @* </div> *@
+        </div>
+    </div>
 </div>
+
+<!-- Features Section -->
+<div class="container mb-5">
+    <h2 class="text-center mb-5">Key Features</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-diagram-3 fs-1 text-primary mb-3"></i>
+                    <h3>Chart of Accounts</h3>
+                    <p>Manage your financial accounts with hierarchical structure</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-receipt fs-1 text-primary mb-3"></i>
+                    <h3>Voucher Management</h3>
+                    <p>Create and manage journal, payment and receipt vouchers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-graph-up fs-1 text-primary mb-3"></i>
+                    <h3>Financial Reports</h3>
+                    <p>Generate essential financial reports with one click</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="bg-dark text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to streamline your accounting?</h2>
+        <a href="/Identity/Account/Register" class="btn btn-light btn-lg px-4 me-2">Sign Up Free</a>
+        <a href="/Identity/Account/Login" class="btn btn-outline-light btn-lg px-4">Login</a>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 0 0 20px 20px;
+        margin-bottom: 3rem;
+    }
+
+    .card {
+        transition: transform 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+</style>
+
+@section Scripts {
+    <!-- Add Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+}

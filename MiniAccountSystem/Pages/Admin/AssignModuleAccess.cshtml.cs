@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using Microsoft.AspNetCore.Authorization; // Add this using directive
 
 namespace MiniAccountSystem.Pages.Admin
 {
+    // Apply the Authorize attribute here, specifying the "Admin" role
+    [Authorize(Roles = "Admin")]
     public class AssignModuleAccessModel : PageModel
     {
         private readonly IConfiguration _configuration;
@@ -28,18 +31,18 @@ namespace MiniAccountSystem.Pages.Admin
         public void OnGet()
         {
             Roles = new List<SelectListItem>
-        {
-            new SelectListItem("Admin", "Admin"),
-            new SelectListItem("Accountant", "Accountant"),
-            new SelectListItem("Viewer", "Viewer")
-        };
+            {
+                new SelectListItem("Admin", "Admin"),
+                new SelectListItem("Accountant", "Accountant"),
+                new SelectListItem("Viewer", "Viewer")
+            };
 
             Modules = new List<SelectListItem>
-        {
-            new SelectListItem("Chart Of Accounts", "ChartOfAccounts"),
-            new SelectListItem("Voucher Entry", "VoucherEntry"),
-            new SelectListItem("Reports", "Reports")
-        };
+            {
+                new SelectListItem("Chart Of Accounts", "ChartOfAccounts"),
+                new SelectListItem("Voucher Entry", "VoucherEntry"),
+                new SelectListItem("Reports", "Reports")
+            };
         }
 
         public async Task<IActionResult> OnPostAsync()

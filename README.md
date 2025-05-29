@@ -24,3 +24,40 @@ A simple account management system using ASP.NET Core Razor Pages, SQL Server (S
 1. Clone the repository:
    ```bash
    git clone https://github.com/safrinanishi97/MiniAccountSystem.git
+
+
+   ## 📸 Screenshots
+
+### Home Page
+![Home Page](screenshots/Home.png)
+
+### Admin-Home Page
+![Home Page Admin](screenshots/Home2.png)
+
+### AssignModuleAccess Page
+![AssignModuleAccess Page](screenshots/Admin_AssignModuleAccess.png)
+
+### Account_Login_AssignModuleAccess Page
+![Login AssignModuleAccess Page](screenshots/Account_Login_AssignModuleAccess.png)
+
+### AccessDenied Page
+![AccessDenied Page](screenshots/AccessDenied.png)
+
+
+### 🔐 Login Page
+![Login Page](screenshots/Identity_Account_Login.png)
+
+### 🔐 Register Page
+![Register Page](screenshots/Identity_Account_Register.png)
+
+### 🧾 ChartOfAccounts Form
+![ChartOfAccounts Create](screenshots/ChartOfAccounts_Create.png)
+
+### 🧾 ChartOfAccounts List
+![ChartOfAccounts List](screenshots/ChartOfAccounts_List.png)
+
+### 🧾 ChartOfAccounts Index
+![ChartOfAccounts Index](screenshots/ChartOfAccounts_Index.png)
+
+### 🧾 Voucher Entry Form
+![Voucher Entry](screenshots/Vouchers_Create.png)

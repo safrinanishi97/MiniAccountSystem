@@ -25,11 +25,11 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
-            var user = await _userManager.GetUserAsync(User);
-            var roles = await _userManager.GetRolesAsync(user);
-            var role = roles.FirstOrDefault() ?? "";
+            string role = User.IsInRole("Admin") ? "Admin" :
+                          User.IsInRole("Accountant") ? "Accountant" :
+                          User.IsInRole("Viewer") ? "Viewer" : "";
 
             if (!_permissionService.HasAccess(role, "ChartOfAccounts"))
             {
@@ -39,7 +39,7 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
             // Otherwise continue
             return Page();
         }
-    
+
 
         //public IActionResult OnGet()
         //{
