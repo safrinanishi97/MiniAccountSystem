@@ -26,6 +26,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     await DataSeeder.SeedRolesAsync(services);
+    await DataSeeder.SeedAdminUserAsync(services);
 }
 
 // Configure the HTTP request pipeline.
