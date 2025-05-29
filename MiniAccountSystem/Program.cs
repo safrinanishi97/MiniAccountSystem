@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MiniAccountSystem.Data;
+using MiniAccountSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
 .AddRoles<IdentityRole>() // ✅ This adds role support
 .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddSingleton<PermissionService>();
 
 builder.Services.AddRazorPages();
 
