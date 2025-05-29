@@ -1,0 +1,31 @@
+﻿@page "{id:int}"
+@model MiniAccountSystem.Pages.ChartOfAccounts.EditModel
+@{
+}
+<h2>Edit Chart of Account</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Account.Id" />
+
+    <div class="form-group">
+        <label asp-for="Account.Name"></label>
+        <input asp-for="Account.Name" class="form-control" />
+        <span asp-validation-for="Account.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Account.ParentId">Parent Account</label>
+        <select asp-for="Account.ParentId" class="form-control">
+            <option value="">-- None --</option>
+            @foreach (var parent in Model.Parents)
+            {
+                <option value="@parent.Id" selected="@(parent.Id == Model.Account.ParentId ? "selected" : null)">
+                    @parent.Name
+                </option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+</form>

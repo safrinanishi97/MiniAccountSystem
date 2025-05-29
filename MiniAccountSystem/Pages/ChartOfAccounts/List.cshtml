@@ -1,0 +1,41 @@
+﻿@page
+@model MiniAccountSystem.Pages.ChartOfAccounts.ListModel
+@using MiniAccountSystem.Models
+@{
+}
+
+<h2>Chart of Accounts</h2>
+<a href="Create" class="btn btn-success mb-3">Add Account</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Name</th><th>Parent</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        @{
+            await RenderTree(Model.Accounts, null, 0);
+        }
+    </tbody>
+</table>
+
+@functions {
+    public async Task RenderTree(List<ChartOfAccount> accounts, int? parentId, int level)
+    {
+        var children = accounts.Where(a => a.ParentId == parentId).ToList();
+        foreach (var acc in children)
+        {
+            <tr>
+                <td>@Html.Raw(new string('-', level * 4)) @acc.Name</td>
+                <td>@(accounts.FirstOrDefault(p => p.Id == acc.ParentId)?.Name ?? "None")</td>
+                <td>
+                    <a href="Edit?id=@acc.Id" class="btn btn-primary btn-sm">Edit</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@acc.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+
+            await RenderTree(accounts, acc.Id, level + 1);
+        }
+    }
+}
