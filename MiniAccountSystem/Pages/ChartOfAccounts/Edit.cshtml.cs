@@ -8,6 +8,12 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 {
     public class EditModel : PageModel
     {
+        private readonly IConfiguration _configuration;
+
+        public EditModel(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         [BindProperty]
         public ChartOfAccount Account { get; set; }
 

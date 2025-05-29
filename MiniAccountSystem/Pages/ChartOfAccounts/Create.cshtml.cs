@@ -8,6 +8,12 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 {
     public class CreateModel : PageModel
     {
+        private readonly IConfiguration _configuration;
+
+        public CreateModel(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         [BindProperty]
         public ChartOfAccount Account { get; set; }
 
@@ -16,7 +22,9 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
         public void OnGet()
         {
             // Load all accounts to show as potential parents
-            using var con = new SqlConnection("YourConnectionString");
+            string connectionString = _configuration.GetConnectionString("DefaultConnection")
+            ?? throw new ArgumentNullException("Connection string is missing!");
+            using var con = new SqlConnection(connectionString);
             var cmd = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts", con);
             con.Open();
             var reader = cmd.ExecuteReader();

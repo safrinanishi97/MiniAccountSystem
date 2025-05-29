@@ -45,17 +45,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Accounts/Index">Accounts</a>
+                        </li>
                         @if (PermissionService.HasAccess(role, "ChartOfAccounts"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Accounts/Index">Chart of Accounts</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/ChartOfAccounts/List">Chart Of Accounts</a>
                             </li>
                         }
 
                         @if (PermissionService.HasAccess(role, "VoucherEntry"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Vouchers/Index">Voucher Entry</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Vouchers/Create">Voucher Entry</a>
                             </li>
                         }
                         <li class="nav-item">

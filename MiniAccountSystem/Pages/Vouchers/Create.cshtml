@@ -1,0 +1,53 @@
+﻿@page
+@model MiniAccountSystem.Pages.Vouchers.CreateModel
+@{
+    ViewData["Title"] = "Create Voucher";
+}
+<h2>Create Voucher</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label>Voucher Type</label>
+        <select asp-for="VoucherType" class="form-control">
+            <option value="Journal">Journal</option>
+            <option value="Payment">Payment</option>
+            <option value="Receipt">Receipt</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Reference No</label>
+        <input asp-for="ReferenceNo" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Date</label>
+        <input asp-for="VoucherDate" type="date" class="form-control" />
+    </div>
+
+    <h4>Voucher Entries</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Account</th>
+                <th>Debit</th>
+                <th>Credit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Entries.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select asp-for="Entries[@i].AccountId" class="form-control" asp-items="Model.AccountList"></select>
+                    </td>
+                    <td>
+                        <input asp-for="Entries[@i].DebitAmount" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="Entries[@i].CreditAmount" class="form-control" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Save Voucher</button>
+</form>
