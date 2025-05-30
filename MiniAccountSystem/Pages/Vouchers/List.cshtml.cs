@@ -18,31 +18,25 @@ namespace MiniAccountSystem.Pages.Vouchers
         }
 
         public List<Voucher> Vouchers { get; set; } = new List<Voucher>();
-        public string ErrorMessage { get; set; }
 
         public async Task OnGetAsync()
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
-                    ?? throw new ArgumentNullException("Connection string is missing!");
+            ?? throw new ArgumentNullException("Connection string is missing!"); // Get your connection string
 
-            using var con = new SqlConnection(connectionString);
-            if (string.IsNullOrEmpty(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                ErrorMessage = "Database connection string is missing or empty.";
-                return;
-            }
-
-            try
-            {
-                using (var connection = new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand("sp_GetVouchers", connection)) // Stored procedure to fetch vouchers
                 {
-                    var command = new SqlCommand("sp_GetVouchers", connection);
                     command.CommandType = CommandType.StoredProcedure;
+                    // Add parameters if you want to filter vouchers (e.g., by date range, type)
+                    // command.Parameters.AddWithValue("@StartDate", DateTime.Today.AddMonths(-1));
+                    // command.Parameters.AddWithValue("@EndDate", DateTime.Today);
 
                     await connection.OpenAsync();
-                    using (var reader = await command.ExecuteReaderAsync())
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        while (await reader.ReadAsync())
+                        while (reader.Read())
                         {
                             Vouchers.Add(new Voucher
                             {
@@ -52,36 +46,13 @@ namespace MiniAccountSystem.Pages.Vouchers
                                 VoucherDate = reader.GetDateTime(reader.GetOrdinal("VoucherDate")),
                                 TotalDebit = reader.GetDecimal(reader.GetOrdinal("TotalDebit")),
                                 TotalCredit = reader.GetDecimal(reader.GetOrdinal("TotalCredit")),
-                                // Assuming CreatedDate is added and available
-                                CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate"))
+                                CreatedDate = reader.IsDBNull(reader.GetOrdinal("CreatedDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
+                                CreatedBy = reader.IsDBNull(reader.GetOrdinal("CreatedBy")) ? null : reader.GetString(reader.GetOrdinal("CreatedBy"))
                             });
                         }
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                ErrorMessage = $"Database error loading vouchers: {ex.Message}";
-                // Log the exception (e.g., using ILogger)
-                Console.WriteLine($"SQL Error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = $"An unexpected error occurred: {ex.Message}";
-                // Log the exception
-                Console.WriteLine($"Error: {ex.Message}");
-            }
         }
     }
-
-    // public class Voucher 
-    // {
-    //     public int Id { get; set; }
-    //     public string VoucherType { get; set; }
-    //     public string ReferenceNo { get; set; }
-    //     public DateTime VoucherDate { get; set; }
-    //     public decimal TotalDebit { get; set; }
-    //     public decimal TotalCredit { get; set; }
-    //     public DateTime CreatedDate { get; set; } 
-    // }
 }
