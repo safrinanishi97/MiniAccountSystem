@@ -174,7 +174,8 @@ namespace MiniAccountSystem.Pages.Vouchers
         private async Task<List<ChartOfAccount>> GetAccountsFromDBAsync()
         {
             var accounts = new List<ChartOfAccount>();
-            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+            string connectionString = _configuration.GetConnectionString("DefaultConnection")
+            ?? throw new ArgumentNullException("Connection string is missing!");
 
             // Add robust error handling for connection string
             if (string.IsNullOrEmpty(connectionString))
@@ -221,8 +222,7 @@ namespace MiniAccountSystem.Pages.Vouchers
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // You might also need to re-fetch AccountList here if validation fails
-            // to re-render the dropdowns correctly on postback.
+         
             if (!ModelState.IsValid)
             {
                 AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name");
@@ -232,7 +232,7 @@ namespace MiniAccountSystem.Pages.Vouchers
             if (Entries == null || Entries.Count < 2)
             {
                 ModelState.AddModelError("", "At least two entries required");
-                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); // Re-initialize
+                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); 
                 return Page();
             }
 
@@ -242,7 +242,7 @@ namespace MiniAccountSystem.Pages.Vouchers
             if (totalDebit != totalCredit)
             {
                 ModelState.AddModelError("", "Total debits must equal total credits");
-                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); // Re-initialize
+                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); 
                 return Page();
             }
 

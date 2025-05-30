@@ -102,7 +102,7 @@
 
         document.getElementById('removeEntry').addEventListener('click', function() {
             const rows = document.querySelectorAll('tbody tr');
-            if (rows.length > 1) { // Keep at least one row
+            if (rows.length > 1) { 
                 rows[rows.length - 1].remove();
             }
         });

@@ -1,0 +1,60 @@
+﻿@page
+@model MiniAccountSystem.Pages.Vouchers.ListModel
+@{
+    ViewData["Title"] = "Voucher List";
+}
+
+<h2>Voucher List</h2>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New Voucher</a>
+</p>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
+
+@if (Model.Vouchers != null && Model.Vouchers.Count > 0)
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Voucher ID</th>
+                <th>Type</th>
+                <th>Reference No</th>
+                <th>Date</th>
+                <th>Total Debit</th>
+                <th>Total Credit</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var voucher in Model.Vouchers)
+            {
+                <tr>
+                    <td>@voucher.Id</td>
+                    <td>@voucher.VoucherType</td>
+                    <td>@voucher.ReferenceNo</td>
+                    <td>@voucher.VoucherDate.ToShortDateString()</td>
+                    <td>@voucher.TotalDebit.ToString("N2")</td> @* N2 for number format with 2 decimal places *@
+                    <td>@voucher.TotalCredit.ToString("N2")</td>
+                    <td>@voucher.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@voucher.Id" class="btn btn-info btn-sm">Details</a>
+                        {{-- Add Edit/Delete buttons here if needed --}}
+                        {{-- <a asp-page="/Vouchers/Edit" asp-route-id="@voucher.Id" class="btn btn-warning btn-sm">Edit</a> --}}
+                        {{-- <a asp-page="/Vouchers/Delete" asp-route-id="@voucher.Id" class="btn btn-danger btn-sm">Delete</a> --}}
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No vouchers found.</p>
+}
