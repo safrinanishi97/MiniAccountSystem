@@ -9,83 +9,83 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MiniAccountSystem
 build_property.RootNamespace = MiniAccountSystem
-build_property.ProjectDir = C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\
+build_property.ProjectDir = C:\Users\Lenovo\Desktop\MyPortfolio\QtechTaskV2\MiniAccountSystem\MiniAccountSystem\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem
+build_property.MSBuildProjectDirectory = C:\Users\Lenovo\Desktop\MyPortfolio\QtechTaskV2\MiniAccountSystem\MiniAccountSystem
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/AccessDenied.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjZXNzRGVuaWVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Admin/AssignModuleAccess.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Admin/AssignModuleAccess.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQXNzaWduTW9kdWxlQWNjZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Create.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcnRPZkFjY291bnRzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Edit.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcnRPZkFjY291bnRzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Index.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcnRPZkFjY291bnRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/List.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/ChartOfAccounts/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcnRPZkFjY291bnRzXExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Error.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Index.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Privacy.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Shared/_LoginPartial.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Vouchers/Create.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Vouchers/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm91Y2hlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Vouchers/Index.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Vouchers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm91Y2hlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Vouchers/List.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Vouchers/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm91Y2hlcnNcTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/_ViewImports.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/_ViewStart.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/Desktop/QtechTask/MiniAccountSystem/MiniAccountSystem/Pages/Shared/_Layout.cshtml]
+[C:/Users/Lenovo/Desktop/MyPortfolio/QtechTaskV2/MiniAccountSystem/MiniAccountSystem/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-58t94u5syp

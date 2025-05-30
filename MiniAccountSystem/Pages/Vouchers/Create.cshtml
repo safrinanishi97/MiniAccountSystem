@@ -61,48 +61,102 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        // Client-side validation
+       
+        const accountOptionsTemplate = document.createElement('div');
+        accountOptionsTemplate.style.display = 'none';
+        accountOptionsTemplate.innerHTML = `
+        @foreach (var item in Model.AccountList)
+        {
+                    <option value="@item.Value">@item.Text</option>
+        }
+        `;
+        document.body.appendChild(accountOptionsTemplate);
+               // Client-side validation
         $("form").submit(function(e) {
             let isValid = true;
-            $("tbody tr").each(function() {
-                const debit = parseFloat($(this).find("[name*='DebitAmount']").val()) || 0;
-                const credit = parseFloat($(this).find("[name*='CreditAmount']").val()) || 0;
+            let totalDebit = 0;
+            let totalCredit = 0;
+
+            // Iterate through each table row within the tbody
+            $("tbody tr").each(function(index, row) {
+                // Find the debit and credit input fields within the current row
+                const debitInput = $(row).find("input[name$='.DebitAmount']"); // name ends with '.DebitAmount'
+                const creditInput = $(row).find("input[name$='.CreditAmount']"); // name ends with '.CreditAmount'
+
+                // Get the value, default to empty string if input not found
+                const debitVal = debitInput.length ? debitInput.val() : '';
+                const creditVal = creditInput.length ? creditInput.val() : '';
+
+                console.log(`Row ${index}: Raw Debit val: '${debitVal}', Raw Credit val: '${creditVal}'`);
+
+                // Parse to float, defaulting to 0 if parsing fails (e.g., empty string or non-numeric)
+                const debit = parseFloat(debitVal) || 0;
+                const credit = parseFloat(creditVal) || 0;
+
+                console.log(`Row ${index}: Parsed Debit: ${debit}, Parsed Credit: ${credit}`);
 
                 if (debit > 0 && credit > 0) {
                     alert("An entry cannot have both debit and credit amounts!");
                     isValid = false;
-                    return false;
+                    return false; // Break the each loop
                 }
+
+                totalDebit += debit;
+                totalCredit += credit;
             });
+                // Round to a reasonable number of decimal places (e.g., 2 for currency)
+        totalDebit = parseFloat(totalDebit.toFixed(2));
+        totalCredit = parseFloat(totalCredit.toFixed(2));
+        console.log(`Final Totals: Total Debit: ${totalDebit}, Total Credit: ${totalCredit}`);
+
+        if (isValid && totalDebit !== totalCredit) {
+            alert("Total Debits must equal Total Credits!");
+            isValid = false;
+        }
+
+            // Ensure at least one entry has a non-zero debit or credit, if desired
+            if (isValid && totalDebit === 0 && totalCredit === 0 && Model.Entries.length > 0) {
+                alert("Please enter at least one debit or credit amount.");
+                isValid = false;
+            }
+
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+
             return isValid;
         });
 
-        // Dynamic row management
+
+        // Dynamic row management (as provided in previous good answer)
         document.getElementById('addEntry').addEventListener('click', function() {
             const index = document.querySelectorAll('tbody tr').length;
-            const template = `
-                <tr>
-                    <td>
-                        <select name="Entries[${index}].AccountId" class="form-control">
-        @foreach (var item in Model.AccountList)
-        {
-                                    <option value="@item.Value">@item.Text</option>
-        }
-                        </select>
-                    </td>
-                    <td>
-                        <input name="Entries[${index}].DebitAmount" class="form-control" />
-                    </td>
-                    <td>
-                        <input name="Entries[${index}].CreditAmount" class="form-control" />
-                    </td>
-                </tr>`;
-            document.querySelector('tbody').insertAdjacentHTML('beforeend', template);
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>
+                    <select name="Entries[${index}].AccountId" class="form-control"></select>
+                </td>
+                <td>
+                    <input name="Entries[${index}].DebitAmount" class="form-control" value="0" />
+                </td>
+                <td>
+                    <input name="Entries[${index}].CreditAmount" class="form-control" value="0" />
+                </td>`;
+
+            document.querySelector('tbody').appendChild(newRow);
+
+            const newSelect = newRow.querySelector('select[name*="AccountId"]');
+            if (newSelect) {
+                $(accountOptionsTemplate).find('option').each(function() {
+                    $(this).clone().appendTo(newSelect);
+                });
+            }
         });
 
         document.getElementById('removeEntry').addEventListener('click', function() {
             const rows = document.querySelectorAll('tbody tr');
-            if (rows.length > 1) { 
+            if (rows.length > 1) {
                 rows[rows.length - 1].remove();
             }
         });
