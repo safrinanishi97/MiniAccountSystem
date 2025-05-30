@@ -11,7 +11,7 @@ A simple account management system built with ASP.NET Core Razor Pages, designed
 - [Prerequisites](#prerequisites)
 - [Database Setup](#database-setup)
 - [Running the Application](#running-the-application)
-- [Testing & Admin Access](#testing--admin-access)
+- [Default Users for Testing](#testing--admin-access)
 - [Screenshots](#screenshots)
 - [Future Enhancements](#future-enhancements)
 
@@ -89,8 +89,9 @@ Before you begin, ensure you have the following installed:
     ```bash
     dotnet ef database update
     ```
-4.  **Create Stored Procedures**: Execute the SQL scripts for your stored procedures (`sp_ManageChartOfAccounts`, `sp_SaveVoucher`, and any other necessary SPs for user/role management, module access, etc.) on your `MiniAccountSystemDB` database.
-    *(**Note**: You should provide these `.sql` script files, perhaps in a `DatabaseScripts` folder in your repository, and mention that here.)*
+4.  **Create Stored Procedures**: Execute the SQL scripts for your stored procedures (`sp_ManageChartOfAccounts`, `sp_SaveVoucher`, and any other necessary SPs for user/role management, module access, etc.) on your `MiniAccountSystemDB` database. Navigate to the `DatabaseScripts` folder in the cloned repository. Execute all `.sql` script files found in this folder against your `MiniAccountSystemDB` database using SQL Server Management Studio (SSMS) or a similar tool.
+ **Ensure you run them in the correct order if there are dependencies (e.g., User-Defined Table Types must be created before Stored Procedures that utilize them).**
+    *(For example, run `VoucherEntries_Table.sql` before `sp_SaveVoucher.sql`.)*
 
 ### Running the Application
 
@@ -111,13 +112,20 @@ Before you begin, ensure you have the following installed:
       ```
 4.  The application will typically launch on `https://localhost:7154` (or another assigned port). Check the console output for the exact URL.
 
-## Testing & Admin Access
 
-To test the application, register a new user through the "Register" page.
-For testing `Admin` functionalities:
-- You will need to manually assign the `Admin` role to a registered user directly in your SQL Server database (e.g., in the `AspNetUserRoles` table).
-- Alternatively, if your system has an initial "super-admin" creation process or a way to assign roles to the first registered user, provide those instructions here.
-- Module access can then be assigned by this Admin user via the "Assign Module Access" page.
+## Default Users for Testing
+
+For easy testing of different roles and permissions, the application is pre-seeded with the following default users:
+
+| Role        | Username             | Password      | Accessible Modules (via `sp_AssignUserAccess`) |
+| :---------- | :------------------- | :------------ | :--------------------------------------------- |
+| **Admin** | `safrina@gmail.com`  | `Safrina@123` | ChartOfAccounts, VoucherEntry, User/Role Management |
+| **Accountant** | `accountant1@gmail.com` | `Account@123` | VoucherEntry                                   |
+| **Viewer** | `viewer1@gmail.com`  | `Viewer@123`  | ChartOfAccounts                                |
+
+
+
+
    ## 📸 Screenshots
 
 ### Home Page
@@ -156,8 +164,7 @@ For testing `Admin` functionalities:
 
 
 ## Future Enhancements
-
-- Implementing comprehensive reporting modules (e.g., Trial Balance, General Ledger).
+- Implementing comprehensive reporting modules, such as **Trial Balance, General Ledger, Cash Book, Bank Book, and customizable financial statements.**
 - Building a dedicated UI for managing users and roles by an Admin, without direct database interaction.
-- Enhanced client-side validation and user experience.
-- Integration with logging frameworks for better error diagnostics.
+- Enhanced client-side validation and user experience with more immediate feedback.
+- Integration with logging frameworks for better error diagnostics and monitoring.
