@@ -1,0 +1,264 @@
+﻿@page "{id:int}"
+@model EditModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Edit Voucher";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h2 class="mb-0">Edit Voucher</h2>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="row mb-4">
+                <input type="hidden" asp-for="Voucher.VoucherId" />
+                <div class="col-md-4">
+
+                    <label class="form-label">Voucher Type</label>
+                    <select asp-for="Voucher.VoucherType" class="form-select">
+                        <option>Journal</option>
+                        <option>Payment</option>
+                        <option>Receipt</option>
+                    </select>
+                    @* <label>Voucher Type</label> *@
+
+                </div>
+                <div class="col-md-4">
+
+                    <label class="form-label">Date</label>
+                    <input asp-for="Voucher.VoucherDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+
+
+                </div>
+                <div class="col-md-4">
+
+                    <label class="form-label">Reference No</label>
+                    <input asp-for="Voucher.ReferenceNo" class="form-control" />
+
+                </div>
+            </div>
+            <hr />
+            <h5 class="mb-3 border-bottom pb-2">Voucher Details</h5>
+
+            <div id="voucherDetailsContainer">
+                @for (int i = 0; i < Model.Voucher.VoucherDetails.Count; i++)
+                {
+                    <div class="row mb-3 voucher-row align-items-center">
+                        <div class="col-md-5">
+                            <select name="Voucher.VoucherDetails[@i].AccountId" class="form-select">
+                                @foreach (var acc in Model.AccountList)
+                                {
+                                    <option value="@acc.Value" selected="@(acc.Value == Model.Voucher.VoucherDetails[i].AccountId.ToString())">
+                                        @acc.Text
+                                    </option>
+
+                                    @* <option value="@acc.Value">@acc.Text</option> *@
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text">৳</span>
+                                <input name="Voucher.VoucherDetails[@i].DebitAmount" class="form-control" placeholder="Debit" value="@Model.Voucher.VoucherDetails[i].DebitAmount" /> 
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text">৳</span>
+                                <input name="Voucher.VoucherDetails[@i].CreditAmount" class="form-control" placeholder="Credit" value="@Model.Voucher.VoucherDetails[i].CreditAmount" /> 
+                            </div>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <button type="button" class="btn btn-sm btn-outline-danger remove-row">
+                                <i class="bi bi-trash">Remove</i>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-outline-primary" id="addRow">
+                    <i class="bi bi-plus-circle"></i> Add Line
+                </button>
+                <button type="submit" class="btn btn-outline-primary px-4">
+                    <i class="bi bi-save"></i> Update Voucher
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewData["Error"]?.ToString()))
+{
+    <div class="alert alert-danger mt-3">@ViewData["Error"]</div>
+}
+
+@* @section Scripts { *@
+@*     <script> *@
+@*         let rowIndex = @Model.Voucher.VoucherDetails.Count; *@
+@*         const accountOptions = `@Html.Raw(string.Join("", Model.AccountList.Select(a => $"<option value='{a.Value}'>{a.Text}</option>")))`; *@
+
+@*         // function renderRow(index) { *@
+@*         //     return ` *@
+@*         //         <div class="row mb-3 voucher-row align-items-center"> *@
+@*         //             <div class="col-md-5"> *@
+@*         //                 <select name="Voucher.VoucherDetails[${index}].AccountId" class="form-select"> *@
+@*         //                     ${accountOptions} *@
+@*         //                 </select> *@
+@*         //             </div> *@
+@*         //             <div class="col-md-3"> *@
+@*         //                 <div class="input-group"> *@
+@*         //                     <span class="input-group-text">৳</span> *@
+@*         //                     <input name="Voucher.VoucherDetails[${index}].DebitAmount" class="form-control" placeholder="Debit" /> *@
+@*         //                 </div> *@
+@*         //             </div> *@
+@*         //             <div class="col-md-3"> *@
+@*         //                 <div class="input-group"> *@
+@*         //                     <span class="input-group-text">৳</span> *@
+@*         //                     <input name="Voucher.VoucherDetails[${index}].CreditAmount" class="form-control" placeholder="Credit" /> *@
+@*         //                 </div> *@
+@*         //             </div> *@
+@*         //             <div class="col-md-1 text-end"> *@
+@*         //                 <button type="button" class="btn btn-sm btn-outline-danger remove-row"> *@
+@*         //                     <i class="bi bi-trash">Remove</i> *@
+@*         //                 </button> *@
+@*         //             </div> *@
+@*         //         </div> *@
+@*         //     `; *@
+@*         // } *@
+
+
+@*                 function renderRow(index) { *@
+@*             return ` *@
+@*                 <div class="row mb-3 voucher-row align-items-center"> *@
+@*                     <div class="col-md-5"> *@
+@*                         <select name="Voucher.VoucherDetails[${index}].AccountId" class="form-select"> *@
+@*                             ${accountOptions} *@
+@*                         </select> *@
+@*                     </div> *@
+@*                     <div class="col-md-3"> *@
+@*                         <div class="input-group"> *@
+@*                             <span class="input-group-text">৳</span> *@
+@*                             <input name="Voucher.VoucherDetails[${index}].DebitAmount" *@
+@*                                    class="form-control" *@
+@*                                    placeholder="Debit" *@
+@*                                    value="${Voucher.VoucherDetails[index]?.DebitAmount || ''}" /> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                     <div class="col-md-3"> *@
+@*                         <div class="input-group"> *@
+@*                             <span class="input-group-text">৳</span> *@
+@*                             <input name="Voucher.VoucherDetails[${index}].CreditAmount" *@
+@*                                    class="form-control" *@
+@*                                    placeholder="Credit" *@
+@*                                    value="${Voucher.VoucherDetails[index]?.CreditAmount || ''}" /> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                     <div class="col-md-1 text-end"> *@
+@*                         <button type="button" class="btn btn-sm btn-outline-danger remove-row"> *@
+@*                             <i class="bi bi-trash">Remove</i> *@
+@*                         </button> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             `; *@
+@*         } *@
+
+@*         function reindexRows() { *@
+@*             let rows = document.querySelectorAll("#voucherDetailsContainer .voucher-row"); *@
+@*             rows.forEach((row, i) => { *@
+@*                 row.querySelectorAll("select, input").forEach(input => { *@
+@*                     if (input.name.includes("AccountId")) *@
+@*                         input.name = `Voucher.VoucherDetails[${i}].AccountId`; *@
+@*                     else if (input.name.includes("DebitAmount")) *@
+@*                         input.name = `Voucher.VoucherDetails[${i}].DebitAmount`; *@
+@*                     else if (input.name.includes("CreditAmount")) *@
+@*                         input.name = `Voucher.VoucherDetails[${i}].CreditAmount`; *@
+@*                 }); *@
+@*             }); *@
+@*             rowIndex = rows.length; *@
+@*         } *@
+
+@*         $('#addRow').click(function () { *@
+@*             $('#voucherDetailsContainer').append(renderRow(rowIndex)); *@
+@*             rowIndex++; *@
+@*         }); *@
+
+
+@*         $(document).on('click', '.remove-row', function () { *@
+@*             $(this).closest('.voucher-row').remove(); *@
+@*             reindexRows(); *@
+@*         }); *@
+@*     </script> *@
+@* } *@
+
+
+@section Scripts {
+    <script>
+        let rowIndex = @Model.Voucher.VoucherDetails.Count;
+        const accountOptions = `@Html.Raw(string.Join("", Model.AccountList.Select(a => $"<option value='{a.Value}'>{a.Text}</option>")))`;
+
+        function renderRow(index) {
+            return `
+                <div class="row mb-3 voucher-row align-items-center">
+                    <div class="col-md-5">
+                        <select name="Voucher.VoucherDetails[${index}].AccountId" class="form-select">
+                            ${accountOptions}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-text">৳</span>
+                            <input name="Voucher.VoucherDetails[${index}].DebitAmount"
+                                   class="form-control"
+                                   placeholder="Debit"
+                                   value="0.00" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-text">৳</span>
+                            <input name="Voucher.VoucherDetails[${index}].CreditAmount"
+                                   class="form-control"
+                                   placeholder="Credit"
+                                   value="0.00" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-row">
+                            <i class="bi bi-trash">Remove</i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function reindexRows() {
+            let rows = document.querySelectorAll("#voucherDetailsContainer .voucher-row");
+            rows.forEach((row, i) => {
+                row.querySelectorAll("select, input").forEach(input => {
+                    if (input.name.includes("AccountId"))
+                        input.name = `Voucher.VoucherDetails[${i}].AccountId`;
+                    else if (input.name.includes("DebitAmount"))
+                        input.name = `Voucher.VoucherDetails[${i}].DebitAmount`;
+                    else if (input.name.includes("CreditAmount"))
+                        input.name = `Voucher.VoucherDetails[${i}].CreditAmount`;
+                });
+            });
+            rowIndex = rows.length;
+        }
+
+        $(document).ready(function() {
+            $('#addRow').click(function () {
+                $('#voucherDetailsContainer').append(renderRow(rowIndex));
+                rowIndex++;
+            });
+
+            $(document).on('click', '.remove-row', function () {
+                $(this).closest('.voucher-row').remove();
+                reindexRows();
+            });
+        });
+    </script>
+}

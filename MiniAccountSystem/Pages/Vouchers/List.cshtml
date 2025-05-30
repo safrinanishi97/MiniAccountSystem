@@ -89,7 +89,16 @@
                         </div>
 
                         <!-- Voucher Footer -->
-
+                        @* <div class="card-footer bg-light text-muted"> *@
+                        @*     <div class="d-flex justify-content-between"> *@
+                        @*         <small> *@
+                        @*             <i class="fas fa-user-circle me-1"></i> Created by: @(voucher.CreatedBy ?? "System") *@
+                        @*         </small> *@
+                        @*         <small> *@
+                        @*             <i class="far fa-clock me-1"></i> @voucher.CreatedDate?.ToString("dd MMM yyyy hh:mm tt") *@
+                        @*         </small> *@
+                        @*     </div> *@
+                        @* </div> *@
                     </div>
                 </div>
             }
