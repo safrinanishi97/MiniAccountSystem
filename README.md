@@ -151,7 +151,7 @@ For easy testing of different roles and permissions, the application is pre-seed
 ![Register Page](screenshots/Identity_Account_Register.png)
 
 ### 🧾 ChartOfAccounts Form
-![ChartOfAccounts Create](screenshots/ChartOfAccounts_Create.png)
+![ChartOfAccounts Create](screenshots/ChartofAccountCreate.png)
 
 ### 🧾 ChartOfAccounts List
 ![ChartOfAccounts List](screenshots/ChartOfAccounts_List.png)

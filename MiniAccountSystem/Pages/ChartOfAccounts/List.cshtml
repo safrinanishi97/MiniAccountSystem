@@ -1,4 +1,86 @@
-﻿@page
+﻿@* @page *@
+@* @using MiniAccountSystem.Models *@
+@* @model MiniAccountSystem.Pages.ChartOfAccounts.ListModel *@
+@* @{ *@
+@*     ViewData["Title"] = "Chart of Accounts"; *@
+@* } *@
+
+@* <style> *@
+@*     .tree-view { *@
+@*         padding-left: 20px; *@
+@*     } *@
+
+@*     .tree-item { *@
+@*         position: relative; *@
+@*     } *@
+
+@*         .tree-item:before { *@
+@*             content: ""; *@
+@*             position: absolute; *@
+@*             left: -15px; *@
+@*             top: 0; *@
+@*             border-left: 1px solid #ccc; *@
+@*             height: 100%; *@
+@*         } *@
+
+@*         .tree-item:after { *@
+@*             content: ""; *@
+@*             position: absolute; *@
+@*             left: -15px; *@
+@*             top: 15px; *@
+@*             border-top: 1px solid #ccc; *@
+@*             width: 15px; *@
+@*         } *@
+@* </style> *@
+
+@* <h2>Chart of Accounts</h2> *@
+@* <a href="Create" class="btn btn-success mb-3">Add Account</a> *@
+
+@* <div class="tree-view"> *@
+@*     @RenderAccountTree(Model.Accounts, null, 0) *@
+@* </div> *@
+@* @if (TempData["SuccessMessage"] != null) *@
+@* { *@
+@*     <div class="alert alert-success">@TempData["SuccessMessage"]</div> *@
+@* } *@
+
+
+@* @functions { *@
+@*     public Microsoft.AspNetCore.Html.IHtmlContent RenderAccountTree(List<ChartOfAccount> accounts, int? parentId, int level) *@
+@*     { *@
+@*         var children = accounts.Where(a => a.ParentId == parentId).OrderBy(a => a.Name).ToList(); *@
+
+@*         if (!children.Any() && level == 0) *@
+@*         { *@
+@*             return Html.Raw("<div>No accounts found</div>"); *@
+@*         } *@
+
+@*         var html = new System.Text.StringBuilder(); *@
+
+@*         foreach (var account in children) *@
+@*         { *@
+@*             html.Append($@" *@
+@*                 <div class='tree-item' style='margin-left:{level * 20}px'> *@
+@*                     <div class='d-flex justify-content-between align-items-center'> *@
+@*                         <span>{account.Name}</span> *@
+@*                         <div> *@
+@*                             <a href='Edit?id={account.Id}' class='btn btn-sm btn-primary'>Edit</a> *@
+@*                             <form method='post' asp-page-handler='Delete' asp-route-id='{account.Id}' style='display:inline'> *@
+@*                                 <button type='submit' class='btn btn-sm btn-danger' onclick='return confirm(""Are you sure?"")'>Delete</button> *@
+@*                             </form> *@
+@*                         </div> *@
+@*                     </div> *@
+@*             "); *@
+
+@*             html.Append(RenderAccountTree(accounts, account.Id, level + 1)); *@
+@*             html.Append("</div>"); *@
+@*         } *@
+
+@*         return Html.Raw(html.ToString()); *@
+@*     } *@
+@* } *@
+
+@page
 @using MiniAccountSystem.Models
 @model MiniAccountSystem.Pages.ChartOfAccounts.ListModel
 @{
@@ -6,20 +88,65 @@
 }
 
 <style>
+    .tree-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f2f7fe;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .parent-section {
+        background-color: #cbe6ff;
+        margin-bottom: 25px;
+        border: 1px solid #bdbdbd;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    
+
+    .parent-header {
+        background-color: #2563eb;
+        color: white;
+        padding: 12px 15px;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .parent-header .badge {
+            background-color: rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+        }
+
     .tree-view {
-        padding-left: 20px;
+        padding: 10px;
+        background-color: #f9fbff;
     }
 
     .tree-item {
         position: relative;
+        margin-bottom: 8px;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        border-left: 3px solid #ddd;
+        transition: all 0.2s ease;
     }
+
+        .tree-item:hover {
+            background-color: #f0f7ff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
 
         .tree-item:before {
             content: "";
             position: absolute;
             left: -15px;
             top: 0;
-            border-left: 1px solid #ccc;
+            border-left: 1px dashed #ccc;
             height: 100%;
         }
 
@@ -27,23 +154,74 @@
             content: "";
             position: absolute;
             left: -15px;
-            top: 15px;
-            border-top: 1px solid #ccc;
+            top: 20px;
+            border-top: 1px dashed #ccc;
             width: 15px;
         }
+
+    .account-name {
+        font-weight: 600;
+        color: #2e3a4d;
+    }
+
+    .account-actions .btn {
+        margin-left: 5px;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .account-type-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        margin-left: 10px;
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+    .no-accounts {
+        text-align: center;
+        padding: 30px;
+        color: #6c757d;
+    }
+
+    .child-items {
+        margin-left: 25px;
+        margin-top: 8px;
+    }
 </style>
 
-<h2>Chart of Accounts</h2>
-<a href="Create" class="btn btn-success mb-3">Add Account</a>
+<div class="tree-container">
+    <div class="header-section">
+        <h2 class="mb-0" style="color: #2e3a4d;">
+            <i class="fas fa-sitemap mr-2"></i>Chart of Accounts
+        </h2>
+        <a href="Create" class="btn btn-success">
+            <i class="fas fa-plus mr-1"></i> Add Account
+        </a>
+    </div>
 
-<div class="tree-view">
-    @RenderAccountTree(Model.Accounts, null, 0)
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="tree-view">
+        @RenderAccountTree(Model.Accounts, null, 0)
+    </div>
 </div>
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-
 
 @functions {
     public Microsoft.AspNetCore.Html.IHtmlContent RenderAccountTree(List<ChartOfAccount> accounts, int? parentId, int level)
@@ -52,30 +230,87 @@
 
         if (!children.Any() && level == 0)
         {
-            return Html.Raw("<div>No accounts found</div>");
+            return Html.Raw(@"
+                <div class='no-accounts'>
+                    <i class='fas fa-info-circle fa-2x mb-3'></i>
+                    <h5>No accounts found</h5>
+                    <p>Start by adding your first account</p>
+                </div>");
         }
 
         var html = new System.Text.StringBuilder();
 
         foreach (var account in children)
         {
-            html.Append($@"
-                <div class='tree-item' style='margin-left:{level * 20}px'>
-                    <div class='d-flex justify-content-between align-items-center'>
-                        <span>{account.Name}</span>
-                        <div>
-                            <a href='Edit?id={account.Id}' class='btn btn-sm btn-primary'>Edit</a>
-                            <form method='post' asp-page-handler='Delete' asp-route-id='{account.Id}' style='display:inline'>
-                                <button type='submit' class='btn btn-sm btn-danger' onclick='return confirm(""Are you sure?"")'>Delete</button>
-                            </form>
-                        </div>
-                    </div>
-            ");
+            // Check if this is a parent account (has children)
+            var hasChildren = accounts.Any(a => a.ParentId == account.Id);
 
+            if (hasChildren)
+            {
+                html.Append($@"
+                    <div class='parent-section'>
+                        <div class='parent-header'>
+                            <span>{account.Name}</span>
+                            <span class='badge'>Parent Account</span>
+                        </div>
+                        <div class='tree-view'>
+                ");
+            }
+            else
+            {
+                html.Append($@"
+                    <div class='tree-item' style='margin-left:{level * 15}px'>
+                        <div class='d-flex justify-content-between align-items-center'>
+                            <div>
+                                <span class='account-name'>{account.Name}</span>
+                                <span class='account-type-badge'>{GetAccountTypeBadge(account.Name)}</span>
+                            </div>
+                            <div class='account-actions'>
+                                <a href='Edit?id={account.Id}' class='btn btn-sm btn-outline-primary'>
+                                    <i class='fas fa-edit'>Edit</i>
+                                </a>
+                                <form method='post' asp-page-handler='Delete' asp-route-id='{account.Id}' style='display:inline'>
+                                    <button type='submit' class='btn btn-sm btn-outline-danger' onclick='return confirm(""Are you sure you want to delete this account?"")'>
+                                        <i class='fas fa-trash'>Remove</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                ");
+            }
+
+            // Render child items
             html.Append(RenderAccountTree(accounts, account.Id, level + 1));
-            html.Append("</div>");
+
+            if (hasChildren)
+            {
+                html.Append("</div></div>");
+            }
+            else
+            {
+                html.Append("</div>");
+            }
         }
 
         return Html.Raw(html.ToString());
+    }
+
+    public string GetAccountTypeBadge(string accountType)
+    {
+        switch (accountType?.ToLower())
+        {
+            case "asset":
+                return "Asset";
+            case "liability":
+                return "Liability";
+            case "equity":
+                return "Equity";
+            case "income":
+                return "Income";
+            case "expense":
+                return "Expense";
+            default:
+                return "Account";
+        }
     }
 }
