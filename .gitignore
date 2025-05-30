@@ -1,1 +1,46 @@
 .vs/
+.idea/
+
+Binaries
+[Dd]ebug/
+[Rr]elease/
+*.exe
+*.dll
+*.pdb
+*.suo
+*.user
+*.config
+*.log
+*.bak
+*.obj
+*.exe.config
+
+NuGet packages
+packages/
+*.nupkg
+
+Build results
+[Bb]in/
+[Oo]bj/
+
+Test results
+TestResults/
+
+Resharper
+*.DotSettings
+*.userprefs
+
+VS Code
+.vscode/
+
+Project files
+*.csproj.user
+*.xsp
+*.xsp.user
+
+Git ignore files
+.gitignore.orig
+
+Generated files
+App_Data/
+Content/Uploads/

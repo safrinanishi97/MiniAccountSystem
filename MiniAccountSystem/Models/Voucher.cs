@@ -1,4 +1,6 @@
-﻿namespace MiniAccountSystem.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MiniAccountSystem.Models
 {
     public class Voucher
     {
