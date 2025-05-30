@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Desktop\\MyPortfolio\\QtechTaskV2\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj": {}
+    "C:\\Users\\Lenovo\\Desktop\\QtechTask\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Desktop\\MyPortfolio\\QtechTaskV2\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj": {
+    "C:\\Users\\Lenovo\\Desktop\\QtechTask\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\MyPortfolio\\QtechTaskV2\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj",
+        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\QtechTask\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj",
         "projectName": "MiniAccountSystem",
-        "projectPath": "C:\\Users\\Lenovo\\Desktop\\MyPortfolio\\QtechTaskV2\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj",
+        "projectPath": "C:\\Users\\Lenovo\\Desktop\\QtechTask\\MiniAccountSystem\\MiniAccountSystem\\MiniAccountSystem.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Desktop\\MyPortfolio\\QtechTaskV2\\MiniAccountSystem\\MiniAccountSystem\\obj\\",
+        "outputPath": "C:\\Users\\Lenovo\\Desktop\\QtechTask\\MiniAccountSystem\\MiniAccountSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

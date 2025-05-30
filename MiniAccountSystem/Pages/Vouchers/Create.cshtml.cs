@@ -1,147 +1,28 @@
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.RazorPages;
-//using Microsoft.AspNetCore.Mvc.Rendering;
-//using Microsoft.Data.SqlClient;
-//using MiniAccountSystem.Models;
-//using System.Data;
-
-//namespace MiniAccountSystem.Pages.Vouchers
-//{
-//    public class CreateModel : PageModel
-//    {
-//        private readonly IConfiguration _configuration;
-//        public CreateModel(IConfiguration configuration) => _configuration = configuration;
-
-//        [BindProperty]
-//        public string VoucherType { get; set; }
-
-//        [BindProperty]
-//        public string ReferenceNo { get; set; }
-
-//        [BindProperty]
-//        public DateTime VoucherDate { get; set; } = DateTime.Today;
-
-
-//        [BindProperty]
-//        public List<VoucherEntry> Entries { get; set; } = new()
-//    {
-//        new VoucherEntry(), new VoucherEntry() // 2 default rows
-//    };
-
-//        public SelectList AccountList { get; set; }
-
-//        public async Task OnGetAsync()
-//        {
-//            Entries = new List<VoucherEntry>
-//            {
-//                new VoucherEntry(),
-//                new VoucherEntry()
-//            };
-
-//            // Await the asynchronous method call
-//            AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name");
-//        }
-
-//        // Change return type to Task<List<ChartOfAccount>> and make it async
-//        private async Task<List<ChartOfAccount>> GetAccountsFromDBAsync()
-//        {
-//            var accounts = new List<ChartOfAccount>();
-//            string connectionString = _configuration.GetConnectionString("DefaultConnection")
-//            ?? throw new ArgumentNullException("Connection string is missing!");
-
-//            using (var connection = new SqlConnection(connectionString))
-//            {
-//                var command = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts", connection);
-//                // Use async version of Open and ExecuteReader
-//                await connection.OpenAsync();
-//                using (var reader = await command.ExecuteReaderAsync())
-//                {
-//                    while (await reader.ReadAsync()) // Use async version of Read
-//                    {
-//                        accounts.Add(new ChartOfAccount
-//                        {
-//                            Id = (int)reader["Id"],
-//                            Name = reader["Name"].ToString()
-//                        });
-//                    }
-//                }
-//            }
-
-//            return accounts;
-//        }
-//        public async Task<IActionResult> OnPostAsync()
-//        {
-//            if (Entries == null || Entries.Count < 2)
-//            {
-//                ModelState.AddModelError("", "At least two entries required");
-//                return Page();
-//            }
-
-//            decimal totalDebit = Entries.Sum(e => e.DebitAmount);
-//            decimal totalCredit = Entries.Sum(e => e.CreditAmount);
-
-//            if (totalDebit != totalCredit)
-//            {
-//                ModelState.AddModelError("", "Total debits must equal total credits");
-//                return Page();
-//            }
-
-//            DataTable entryTable = new();
-//            entryTable.Columns.Add("AccountId", typeof(int));
-//            entryTable.Columns.Add("DebitAmount", typeof(decimal));
-//            entryTable.Columns.Add("CreditAmount", typeof(decimal));
-
-//            foreach (var entry in Entries)
-//            {
-//                entryTable.Rows.Add(entry.AccountId, entry.DebitAmount, entry.CreditAmount);
-//            }
-
-//            using SqlConnection con = new(_configuration.GetConnectionString("DefaultConnection"));
-//            using SqlCommand cmd = new("sp_SaveVoucher", con)
-//            {
-//                CommandType = CommandType.StoredProcedure
-//            };
-
-//            cmd.Parameters.AddWithValue("@VoucherType", VoucherType);
-//            cmd.Parameters.AddWithValue("@ReferenceNo", ReferenceNo);
-//            cmd.Parameters.AddWithValue("@VoucherDate", VoucherDate);
-
-//            var tvpParam = cmd.Parameters.AddWithValue("@Entries", entryTable);
-//            tvpParam.SqlDbType = SqlDbType.Structured;
-//            tvpParam.TypeName = "VoucherEntryType";
-
-//            await con.OpenAsync();
-//            await cmd.ExecuteNonQueryAsync();
-//            con.Close();
-
-//            return RedirectToPage("/Vouchers/List");
-//        }
-
-//    }
-//}
-
-
-
-
-// MiniAccountSystem.Pages.Vouchers.CreateModel.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using MiniAccountSystem.Models;
 using System.Data;
-using System.Collections.Generic; // Make sure this is included
-using System.Threading.Tasks;    // Make sure this is included
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq; // For .Sum() method
 
 namespace MiniAccountSystem.Pages.Vouchers
 {
     public class CreateModel : PageModel
     {
         private readonly IConfiguration _configuration;
-        public CreateModel(IConfiguration configuration) => _configuration = configuration;
 
+        // Constructor to inject IConfiguration
+        public CreateModel(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        // Properties bound from the form
         [BindProperty]
-        public string VoucherType { get; set; }
+        public string VoucherType { get; set; } = "Journal"; // Default to Journal
 
         [BindProperty]
         public string ReferenceNo { get; set; }
@@ -150,55 +31,65 @@ namespace MiniAccountSystem.Pages.Vouchers
         public DateTime VoucherDate { get; set; } = DateTime.Today;
 
         [BindProperty]
-        public List<VoucherEntry> Entries { get; set; } = new()
+        public List<VoucherEntry> Entries { get; set; } = new List<VoucherEntry>
         {
-            new VoucherEntry(), new VoucherEntry() // 2 default rows
+            new VoucherEntry(), // First default row
+            new VoucherEntry()  // Second default row
         };
 
-        public SelectList AccountList { get; set; } // This will be initialized in OnGetAsync
+        // Property to hold the list of accounts for the dropdown
+        public SelectList AccountList { get; set; }
 
+        // Message property for displaying success/error messages on the page
+        [TempData] // TempData ensures the message persists for one redirect
+        public string Message { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
+
+        // Handles GET requests to populate the form (e.g., when the page loads)
         public async Task OnGetAsync()
         {
-            // Always initialize Entries
-            Entries = new List<VoucherEntry>
+            // Initialize Entries with default rows if it's null (e.g., on first load)
+            if (Entries == null || !Entries.Any())
             {
-                new VoucherEntry(),
-                new VoucherEntry()
-            };
-
-            // Await the asynchronous database call
-            AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name");
+                Entries = new List<VoucherEntry>
+                {
+                    new VoucherEntry(),
+                    new VoucherEntry()
+                };
+            }
+            // Load accounts for the dropdown
+            await LoadAccountsAsync();
         }
 
-        // Changed to async and returns Task<List<ChartOfAccount>>
-        private async Task<List<ChartOfAccount>> GetAccountsFromDBAsync()
+        // Helper method to load accounts from the database
+        private async Task LoadAccountsAsync()
         {
             var accounts = new List<ChartOfAccount>();
-            string connectionString = _configuration.GetConnectionString("DefaultConnection")
-            ?? throw new ArgumentNullException("Connection string is missing!");
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            // Add robust error handling for connection string
             if (string.IsNullOrEmpty(connectionString))
             {
-                // Log the error (e.g., using ILogger) instead of throwing to allow page to load
-                Console.WriteLine("Error: Connection string 'DefaultConnection' is missing or empty.");
-                return accounts; // Return an empty list to prevent NullReferenceException
+                ErrorMessage = "Database connection string 'DefaultConnection' is missing or empty.";
+                Console.WriteLine(ErrorMessage); // Log to console for debugging
+                AccountList = new SelectList(new List<ChartOfAccount>(), "Id", "Name"); // Provide empty list
+                return;
             }
 
             try
             {
                 using (var connection = new SqlConnection(connectionString))
                 {
-                    var command = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts", connection);
-                    await connection.OpenAsync(); // Use async open
-                    using (var reader = await command.ExecuteReaderAsync()) // Use async reader
+                    var command = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts ORDER BY Name", connection); // Order by Name for better UX
+                    await connection.OpenAsync();
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        while (await reader.ReadAsync()) // Use async read
+                        while (await reader.ReadAsync())
                         {
                             accounts.Add(new ChartOfAccount
                             {
-                                Id = (int)reader["Id"],
-                                Name = reader["Name"].ToString()
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
                             });
                         }
                     }
@@ -206,89 +97,133 @@ namespace MiniAccountSystem.Pages.Vouchers
             }
             catch (SqlException ex)
             {
-                // Log the SQL exception (e.g., using ILogger)
+                ErrorMessage = $"Database error loading accounts: {ex.Message}";
                 Console.WriteLine($"SQL Error fetching accounts: {ex.Message}");
-                // You might want to add a Message property to your model to display this error on the page
-                // Message = "Error loading accounts. Please try again later.";
             }
             catch (Exception ex)
             {
-                // Log any other general exceptions
+                ErrorMessage = $"An unexpected error occurred while loading accounts: {ex.Message}";
                 Console.WriteLine($"An unexpected error occurred: {ex.Message}");
             }
-
-            return accounts; // Ensure a list is always returned, even if empty due to errors.
+            AccountList = new SelectList(accounts, "Id", "Name");
         }
 
+        // Handles POST requests when the form is submitted
         public async Task<IActionResult> OnPostAsync()
         {
-         
+            // Reload accounts in case of validation failure to re-populate dropdowns
+            await LoadAccountsAsync();
+
+            // Check server-side model validation (e.g., [Required] attributes)
             if (!ModelState.IsValid)
             {
-                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name");
+                ErrorMessage = "Please correct the form errors.";
                 return Page();
             }
 
+            // Custom server-side validation for entries count
             if (Entries == null || Entries.Count < 2)
             {
-                ModelState.AddModelError("", "At least two entries required");
-                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); 
+                ModelState.AddModelError("", "At least two entries (one debit, one credit) are required for a valid voucher.");
+                ErrorMessage = "At least two entries (one debit, one credit) are required for a valid voucher.";
                 return Page();
             }
 
+            // Calculate total debit and total credit from submitted entries
             decimal totalDebit = Entries.Sum(e => e.DebitAmount);
             decimal totalCredit = Entries.Sum(e => e.CreditAmount);
 
+            // Custom server-side validation for debit/credit balance
             if (totalDebit != totalCredit)
             {
-                ModelState.AddModelError("", "Total debits must equal total credits");
-                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); 
+                ModelState.AddModelError("", "Total debits must equal total credits.");
+                ErrorMessage = "Total debits must equal total credits.";
                 return Page();
             }
 
-            DataTable entryTable = new();
+            // Validate that each entry has either a debit or a credit, but not both
+            foreach (var entry in Entries)
+            {
+                if (entry.DebitAmount > 0 && entry.CreditAmount > 0)
+                {
+                    ModelState.AddModelError("", "An entry cannot have both debit and credit amounts.");
+                    ErrorMessage = "An entry cannot have both debit and credit amounts.";
+                    return Page();
+                }
+            }
+
+            // Prepare DataTable for SQL Server Table-Valued Parameter (TVP)
+            DataTable entryTable = new DataTable();
             entryTable.Columns.Add("AccountId", typeof(int));
             entryTable.Columns.Add("DebitAmount", typeof(decimal));
             entryTable.Columns.Add("CreditAmount", typeof(decimal));
 
             foreach (var entry in Entries)
             {
-                entryTable.Rows.Add(entry.AccountId, entry.DebitAmount, entry.CreditAmount);
+                // Only add entries that have either a debit or a credit amount
+                if (entry.DebitAmount > 0 || entry.CreditAmount > 0)
+                {
+                    entryTable.Rows.Add(entry.AccountId, entry.DebitAmount, entry.CreditAmount);
+                }
             }
 
-            using SqlConnection con = new(_configuration.GetConnectionString("DefaultConnection"));
-            using SqlCommand cmd = new("sp_SaveVoucher", con)
+            // Ensure there are actual entries to save after filtering empty ones
+            if (entryTable.Rows.Count < 2)
             {
-                CommandType = CommandType.StoredProcedure
-            };
+                ModelState.AddModelError("", "Please ensure at least two non-zero entries are provided.");
+                ErrorMessage = "Please ensure at least two non-zero entries are provided.";
+                return Page();
+            }
 
-            cmd.Parameters.AddWithValue("@VoucherType", VoucherType);
-            cmd.Parameters.AddWithValue("@ReferenceNo", ReferenceNo);
-            cmd.Parameters.AddWithValue("@VoucherDate", VoucherDate);
-
-            var tvpParam = cmd.Parameters.AddWithValue("@Entries", entryTable);
-            tvpParam.SqlDbType = SqlDbType.Structured;
-            tvpParam.TypeName = "VoucherEntryType";
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                ErrorMessage = "Database connection string 'DefaultConnection' is missing or empty.";
+                Console.WriteLine(ErrorMessage);
+                return Page();
+            }
 
             try
             {
-                await con.OpenAsync();
-                await cmd.ExecuteNonQueryAsync();
-                con.Close();
-                return RedirectToPage("/Vouchers/List");
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("sp_SaveVoucher", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameters for the main Voucher details
+                        command.Parameters.AddWithValue("@VoucherType", VoucherType);
+                        command.Parameters.AddWithValue("@ReferenceNo", ReferenceNo);
+                        command.Parameters.AddWithValue("@VoucherDate", VoucherDate);
+                        // CreatedBy will be handled by ASP.NET Identity later, or set to NULL/default for now
+                        // For now, let's pass a placeholder or null if not yet implemented
+                        command.Parameters.AddWithValue("@CreatedBy", User.Identity.IsAuthenticated ? User.Identity.Name : (object)DBNull.Value);
+
+
+                        // Add the Table-Valued Parameter for entries
+                        var tvpParam = command.Parameters.AddWithValue("@Entries", entryTable);
+                        tvpParam.SqlDbType = SqlDbType.Structured;
+                        tvpParam.TypeName = "VoucherEntryType"; // This must match your SQL Server User-Defined Table Type
+
+                        await connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
+                        connection.Close();
+
+                        Message = "Voucher saved successfully!";
+                        return RedirectToPage("/Vouchers/Index"); // Redirect to the list page on success
+                    }
+                }
             }
             catch (SqlException ex)
             {
-                ModelState.AddModelError("", $"Database Error: {ex.Message}");
-                // Log the exception
-                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); // Re-initialize
+                ErrorMessage = $"Database Error: {ex.Message}";
+                Console.WriteLine($"SQL Error saving voucher: {ex.Message}");
                 return Page();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", $"An unexpected error occurred: {ex.Message}");
-                // Log the exception
-                AccountList = new SelectList(await GetAccountsFromDBAsync(), "Id", "Name"); // Re-initialize
+                ErrorMessage = $"An unexpected error occurred: {ex.Message}";
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
                 return Page();
             }
         }
