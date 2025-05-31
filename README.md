@@ -125,51 +125,83 @@ For easy testing of different roles and permissions, the application is pre-seed
 
 
 
-
 <h2>📸 Screenshots</h2>
 
-<div style="display: inline-block; width: 49%; vertical-align: top;">
-  <h4>🏠 Home Page</h4>
-  <img src="screenshots/Home.png" width="100%"/>
+<table>
+  <tr>
+    <td>
+      <h4>🏠 Home Page</h4>
+      <img src="screenshots/Home.png" width="100%"/>
+    </td>
+    <td>
+      <h4>🏠 Admin-Home Page</h4>
+      <img src="screenshots/Home2.png" width="100%"/>
+    </td>
+  </tr>
 
-  <h4>🧾 AssignModuleAccess Page</h4>
-  <img src="screenshots/Admin_AssignModuleAccess.png" width="100%"/>
+  <tr>
+    <td>
+      <h4>🧾 AssignModuleAccess Page</h4>
+      <img src="screenshots/Admin_AssignModuleAccess.png" width="100%"/>
+    </td>
+    <td>
+      <h4>🧾 Account_Login_AssignModuleAccess Page</h4>
+      <img src="screenshots/Account_Login_AssignModuleAccess.png" width="100%"/>
+    </td>
+  </tr>
 
-  <h4>🔐 Login Page</h4>
-  <img src="screenshots/Identity_Account_Login.png" width="100%"/>
+  <tr>
+    <td>
+      <h4>🚫 AccessDenied Page</h4>
+      <img src="screenshots/AccessDenied.png" width="100%"/>
+    </td>
+    <td>
+      <h4>🔐 Login Page</h4>
+      <img src="screenshots/Identity_Account_Login.png" width="100%"/>
+    </td>
+  </tr>
 
-  <h4>🧾 ChartOfAccounts Form</h4>
-  <img src="screenshots/ChartofAccountCreate.png" width="100%"/>
+  <tr>
+    <td>
+      <h4>🔐 Register Page</h4>
+      <img src="screenshots/Identity_Account_Register.png" width="100%"/>
+    </td>
+    <td>
+      <h4>🧾 ChartOfAccounts Form</h4>
+      <img src="screenshots/ChartofAccountCreate.png" width="100%"/>
+    </td>
+  </tr>
 
-  <h4>🧾 ChartOfAccounts Index</h4>
-  <img src="screenshots/ChartOfAccounts_Index.png" width="100%"/>
+  <tr>
+    <td>
+      <h4>🧾 ChartOfAccounts List</h4>
+      <img src="screenshots/ChartOfAccounts_List.png" width="100%"/>
+    </td>
+    <td>
+      <h4>🧾 ChartOfAccounts Index</h4>
+      <img src="screenshots/ChartOfAccounts_Index.png" width="100%"/>
+    </td>
+  </tr>
 
-  <h4>🧾 Voucher Entry Form</h4>
-  <img src="screenshots/VoucherCreate.png" width="100%"/>
-</div>
+  <tr>
+    <td>
+      <h4>🧾 Voucher Entry Form</h4>
+      <img src="screenshots/VoucherCreate.png" width="100%"/>
+    </td>
+    <td>
+      <h4>🧾 Voucher Edit Form</h4>
+      <img src="screenshots/VoucherEdit.png" width="100%"/>
+    </td>
+  </tr>
 
-<div style="display: inline-block; width: 49%; vertical-align: top;">
-  <h4>🏠 Admin-Home Page</h4>
-  <img src="screenshots/Home2.png" width="100%"/>
+  <tr>
+    <td colspan="2">
+      <h4>🧾 Voucher List</h4>
+      <img src="screenshots/Voucher_List.png" width="100%"/>
+    </td>
+  </tr>
+</table>
 
-  <h4>🧾 Account_Login_AssignModuleAccess Page</h4>
-  <img src="screenshots/Account_Login_AssignModuleAccess.png" width="100%"/>
-
-  <h4>🚫 AccessDenied Page</h4>
-  <img src="screenshots/AccessDenied.png" width="100%"/>
-
-  <h4>🔐 Register Page</h4>
-  <img src="screenshots/Identity_Account_Register.png" width="100%"/>
-
-  <h4>🧾 ChartOfAccounts List</h4>
-  <img src="screenshots/ChartOfAccounts_List.png" width="100%"/>
-
-  <h4>🧾 Voucher Edit Form</h4>
-  <img src="screenshots/VoucherEdit.png" width="100%"/>
-</div>
-
-<h4>🧾 Voucher List</h4>
-<img src="screenshots/Voucher_List.png" width="100%"/>
 
 
 
