@@ -128,43 +128,43 @@ For easy testing of different roles and permissions, the application is pre-seed
 ## 📸 Screenshots
 
 ### 🏠 Home Page  
-<img src="screenshots/Home.png" alt="Home Page"  width="500" height="300"  />
+<img src="screenshots/Home.png" alt="Home Page"  width="100%" height="500"  />
 
 ### 🏠 Admin-Home Page  
-<img src="screenshots/Home2.png" alt="Admin-Home Page"  width="500" height="300" />
+<img src="screenshots/Home2.png" alt="Admin-Home Page"  width="100%" height="500" />
 
 ### 🧾 AssignModuleAccess Page  
-<img src="screenshots/Admin_AssignModuleAccess.png" alt="AssignModuleAccess Page"  width="500" height="300" />
+<img src="screenshots/Admin_AssignModuleAccess.png" alt="AssignModuleAccess Page" width="100%" height="500" />
 
 ### 🧾 Account_Login_AssignModuleAccess Page  
-<img src="screenshots/Account_Login_AssignModuleAccess.png" alt="Account_Login_AssignModuleAccess Page"  width="500" height="300"  />
+<img src="screenshots/Account_Login_AssignModuleAccess.png" alt="Account_Login_AssignModuleAccess Page"  width="100%" height="500"  />
 
 ### 🚫 AccessDenied Page  
-<img src="screenshots/AccessDenied.png" alt="AccessDenied Page" width="500" height="300"  />
+<img src="screenshots/AccessDenied.png" alt="AccessDenied Page" width="100%" height="500"  />
 
 ### 🔐 Login Page  
-<img src="screenshots/Identity_Account_Login.png" alt="Login Page" width="500" height="300" />
+<img src="screenshots/Identity_Account_Login.png" alt="Login Page" width="100%" height="500" />
 
 ### 🔐 Register Page  
-<img src="screenshots/Identity_Account_Register.png" alt="Register Page"  width="500" height="300" />
+<img src="screenshots/Identity_Account_Register.png" alt="Register Page" width="100%" height="500" />
 
 ### 🧾 ChartOfAccounts Form  
-<img src="screenshots/ChartofAccountCreate.png" alt="ChartOfAccounts Form" width="500" height="300"  />
+<img src="screenshots/ChartofAccountCreate.png" alt="ChartOfAccounts Form" width="100%" height="500"  />
 
 ### 🧾 ChartOfAccounts List  
-<img src="screenshots/ChartOfAccounts_List.png" alt="ChartOfAccounts List"  width="500" height="300" />
+<img src="screenshots/ChartOfAccounts_List.png" alt="ChartOfAccounts List"  width="100%" height="500" />
 
 ### 🧾 ChartOfAccounts Index  
-<img src="screenshots/ChartOfAccounts_Index.png" alt="ChartOfAccounts Index" width="500" height="300" />
+<img src="screenshots/ChartOfAccounts_Index.png" alt="ChartOfAccounts Index" width="100%" height="500" />
 
 ### 🧾 Voucher List  
-<img src="screenshots/Voucher_List.png" alt="Voucher List" width="500" height="300" />
+<img src="screenshots/Voucher_List.png" alt="Voucher List" width="100%" height="500" />
 
 ### 🧾 Voucher Entry Form  
-<img src="screenshots/VoucherCreate.png" alt="Voucher Entry" width="500" height="300" />
+<img src="screenshots/VoucherCreate.png" alt="Voucher Entry"width="100%" height="500" />
 
 ### 🧾 Voucher Edit Form  
-<img src="screenshots/VoucherEdit.png" alt="Voucher Edit" width="500" height="300" />
+<img src="screenshots/VoucherEdit.png" alt="Voucher Edit" width="100%" height="500" />
 
 
 ## Future Enhancements

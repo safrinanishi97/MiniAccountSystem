@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
@@ -22,55 +23,67 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public IActionResult OnGet(int id)
         {
-            ParentAccounts = new List<ChartOfAccount>();
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException("Connection string is missing!");
+                ?? throw new ArgumentNullException("Connection string 'DefaultConnection' not found.");
 
-            // Load the account to edit
-            using (var con = new SqlConnection(connectionString))
+            try
             {
-                var cmd = new SqlCommand("SELECT Id, Name, ParentId FROM ChartOfAccounts WHERE Id = @Id", con);
-                cmd.Parameters.AddWithValue("@Id", id);
-
-                con.Open();
-                var reader = cmd.ExecuteReader();
-                if (reader.Read())
+                // Load current account
+                using (var conn = new SqlConnection(connectionString))
                 {
-                    Account = new ChartOfAccount
+                    var cmd = new SqlCommand("SELECT Id, Name, ParentId FROM ChartOfAccounts WHERE Id = @Id", conn);
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        Id = (int)reader["Id"],
-                        Name = reader["Name"].ToString(),
-                        ParentId = reader["ParentId"] != DBNull.Value ? (int?)reader["ParentId"] : null
-                    };
+                        if (reader.Read())
+                        {
+                            Account = new ChartOfAccount
+                            {
+                                Id = (int)reader["Id"],
+                                Name = reader["Name"].ToString(),
+                                ParentId = reader["ParentId"] as int?
+                            };
+                        }
+                        else
+                        {
+                            return NotFound();
+                        }
+                    }
                 }
-                else
-                {
-                    return NotFound();
-                }
-            }
 
-            // Load parent accounts (excluding the current account and its descendants)
-            using (var con = new SqlConnection(connectionString))
+                // Load parent accounts (excluding current account and its children)
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var cmd = new SqlCommand(
+                        @"SELECT Id, Name FROM ChartOfAccounts 
+                          WHERE Id != @Id AND (ParentId IS NULL OR ParentId != @Id)
+                          ORDER BY Name", conn);
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        ParentAccounts = new List<ChartOfAccount>();
+                        while (reader.Read())
+                        {
+                            ParentAccounts.Add(new ChartOfAccount
+                            {
+                                Id = (int)reader["Id"],
+                                Name = reader["Name"].ToString()
+                            });
+                        }
+                    }
+                }
+
+                return Page();
+            }
+            catch (SqlException ex)
             {
-                var cmd = new SqlCommand(@"SELECT Id, Name FROM ChartOfAccounts 
-                                         WHERE Id != @Id AND (ParentId IS NULL OR ParentId != @Id)
-                                         ORDER BY Name", con);
-                cmd.Parameters.AddWithValue("@Id", id);
-
-                con.Open();
-                var reader = cmd.ExecuteReader();
-                ParentAccounts = new List<ChartOfAccount>();
-                while (reader.Read())
-                {
-                    ParentAccounts.Add(new ChartOfAccount
-                    {
-                        Id = (int)reader["Id"],
-                        Name = reader["Name"].ToString()
-                    });
-                }
+                TempData["ErrorMessage"] = $"Database error: {ex.Message}";
+                return RedirectToPage("List");
             }
-
-            return Page();
         }
 
         public IActionResult OnPost()
@@ -81,23 +94,31 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
             }
 
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException("Connection string is missing!");
+                ?? throw new ArgumentNullException("Connection string 'DefaultConnection' not found.");
 
-            using (var con = new SqlConnection(connectionString))
+            try
             {
-                var cmd = new SqlCommand("sp_ManageChartOfAccounts", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Action", "UPDATE");
-                cmd.Parameters.AddWithValue("@AccountId", Account.Id);
-                cmd.Parameters.AddWithValue("@AccountName", Account.Name);
-                cmd.Parameters.AddWithValue("@ParentId", (object?)Account.ParentId ?? DBNull.Value);
+                using (var con = new SqlConnection(connectionString))
+                {
+                    var cmd = new SqlCommand("sp_ManageChartOfAccounts", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Action", "UPDATE");
+                    cmd.Parameters.AddWithValue("@AccountId", Account.Id);
+                    cmd.Parameters.AddWithValue("@AccountName", Account.Name);
+                    cmd.Parameters.AddWithValue("@ParentId", (object?)Account.ParentId ?? DBNull.Value);
 
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                TempData["SuccessMessage"] = "Account updated successfully!";
+                return RedirectToPage("List");
             }
-
-            TempData["SuccessMessage"] = "Account updated successfully!";
-            return RedirectToPage("List");
+            catch (SqlException ex)
+            {
+                TempData["ErrorMessage"] = $"Error updating account: {ex.Message}";
+                return Page();
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int}"
 @model MiniAccountSystem.Pages.ChartOfAccounts.EditModel
 @{
     ViewData["Title"] = "Edit Account";
@@ -8,16 +8,24 @@
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
             <h3 class="mb-0">
-                <i class="bi bi-journal-bookmark"></i> Edit Account
+                <i class="bi bi-pencil-square"></i> Edit Account
             </h3>
         </div>
         <div class="card-body">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
             <form method="post" class="needs-validation" novalidate>
                 <input type="hidden" asp-for="Account.Id" />
 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-md-8">
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label asp-for="Account.Name" class="form-label fw-bold">
                                 <i class="bi bi-tag"></i> Account Name
                             </label>
@@ -27,13 +35,18 @@
                     </div>
 
                     <div class="col-md-4">
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label asp-for="Account.ParentId" class="form-label fw-bold">
                                 <i class="bi bi-diagram-2"></i> Parent Account
                             </label>
-                            <select asp-for="Account.ParentId" class="form-select form-select-lg"
-                                    asp-items="@(new SelectList(Model.ParentAccounts, "Id", "Name"))">
+                            <select asp-for="Account.ParentId" class="form-select form-select-lg">
                                 <option value="">-- Select Parent --</option>
+                                @foreach (var parent in Model.ParentAccounts)
+                                {
+                                    <option value="@parent.Id" selected="@(parent.Id == Model.Account.ParentId ? "selected" : null)">
+                                        @parent.Name
+                                    </option>
+                                }
                             </select>
                             <span asp-validation-for="Account.ParentId" class="text-danger small"></span>
                         </div>
@@ -45,7 +58,7 @@
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
                     <button type="submit" class="btn btn-primary px-4">
-                        <i class="bi bi-save"></i> Update Account
+                        <i class="bi bi-save"></i> Save Changes
                     </button>
                 </div>
             </form>
