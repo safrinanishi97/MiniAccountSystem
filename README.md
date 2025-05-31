@@ -127,82 +127,83 @@ For easy testing of different roles and permissions, the application is pre-seed
 
 <h2>📸 Screenshots</h2>
 
-<table>
+<div style="display: flex; justify-content: center;">
+<table style="border: none;">
   <tr>
     <td style="padding: 10px;">
       <h4>🏠 Home Page</h4>
-      <img src="screenshots/Home.png" width="300" height="180"/>
+      <img src="screenshots/Home.png" width="300" height="200"/>
     </td>
     <td>
       <h4>🏠 Admin-Home Page</h4>
-      <img src="screenshots/Home2.png" width="300" height="180"/>
+      <img src="screenshots/Home2.png"  width="300" height="200"/>
     </td>
   </tr>
 
   <tr>
      <td style="padding: 10px;">
       <h4>🧾 AssignModuleAccess Page</h4>
-      <img src="screenshots/Admin_AssignModuleAccess.png" width="300" height="180"/>
+      <img src="screenshots/Admin_AssignModuleAccess.png" width="300" height="200"/>
     </td>
     <td>
       <h4>🧾 Account_Login_AssignModuleAccess Page</h4>
-      <img src="screenshots/Account_Login_AssignModuleAccess.png" width="300" height="180"/>
+      <img src="screenshots/Account_Login_AssignModuleAccess.png" width="300" height="200"/>
     </td>
   </tr>
 
   <tr>
  <td style="padding: 10px;">
       <h4>🚫 AccessDenied Page</h4>
-      <img src="screenshots/AccessDenied.png" width="300" height="180"/>
+      <img src="screenshots/AccessDenied.png" width="300" height="200"/>
     </td>
     <td>
       <h4>🔐 Login Page</h4>
-      <img src="screenshots/Identity_Account_Login.png" width="300" height="180"/>
+      <img src="screenshots/Identity_Account_Login.png" width="300" height="200"/>
     </td>
   </tr>
 
   <tr>
  <td style="padding: 10px;">
       <h4>🔐 Register Page</h4>
-      <img src="screenshots/Identity_Account_Register.png" width="300" height="180"/>
+      <img src="screenshots/Identity_Account_Register.png" width="300" height="200"/>
     </td>
     <td>
       <h4>🧾 ChartOfAccounts Form</h4>
-      <img src="screenshots/ChartofAccountCreate.png" width="300" height="180"/>
+      <img src="screenshots/ChartofAccountCreate.png" width="300" height="200"/>
     </td>
   </tr>
 
   <tr>
     <td style="padding: 10px;">
       <h4>🧾 ChartOfAccounts List</h4>
-      <img src="screenshots/ChartOfAccounts_List.png" width="300" height="180"/>
+      <img src="screenshots/ChartOfAccounts_List.png" width="300" height="200"/>
     </td>
     <td>
       <h4>🧾 ChartOfAccounts Index</h4>
-      <img src="screenshots/ChartOfAccounts_Index.png" width="300" height="180"/>
+      <img src="screenshots/ChartOfAccounts_Index.png" width="300" height="200"/>
     </td>
   </tr>
 
   <tr>
      <td style="padding: 10px;">
       <h4>🧾 Voucher Entry Form</h4>
-      <img src="screenshots/VoucherCreate.png" width="300" height="180"/>
+      <img src="screenshots/VoucherCreate.png" width="300" height="200"/>
     </td>
     <td>
       <h4>🧾 Voucher Edit Form</h4>
-      <img src="screenshots/VoucherEdit.png" width="300" height="180"/>
+      <img src="screenshots/VoucherEdit.png" width="300" height="200"/>
     </td>
   </tr>
 
   <tr>
      <td style="padding: 10px;">
       <h4>🧾 Voucher List</h4>
-      <img src="screenshots/Voucher_List.png"  width="300" height="180"/>
+      <img src="screenshots/Voucher_List.png"  width="300" height="200"/>
     </td>
   </tr>
 </table>
 
-
+</div>
 
 
 
