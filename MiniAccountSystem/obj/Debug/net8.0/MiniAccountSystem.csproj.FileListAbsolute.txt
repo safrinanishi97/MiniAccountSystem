@@ -152,3 +152,5 @@ C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.pdb
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.genruntimeconfig.cache
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\ref\MiniAccountSystem.dll
+C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\EPPlus.dll
+C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\System.Xml.XPath.XmlDocument.dll
