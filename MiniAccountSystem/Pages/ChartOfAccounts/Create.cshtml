@@ -1,34 +1,5 @@
-﻿@* @page *@
-@* @model MiniAccountSystem.Pages.ChartOfAccounts.CreateModel *@
-@* @{ *@
-@*     ViewData["Title"] = "Create Account"; *@
-@* } *@
+﻿
 
-@* <h2>Create Account</h2> *@
-
-@* <form method="post"> *@
-@*     <div class="mb-3"> *@
-@*         <label asp-for="Account.Name" class="form-label"></label> *@
-@*         <input asp-for="Account.Name" class="form-control" /> *@
-@*         <span asp-validation-for="Account.Name" class="text-danger"></span> *@
-@*     </div> *@
-
-@*     <div class="mb-3"> *@
-@*         <label asp-for="Account.ParentId" class="form-label">Parent Account</label> *@
-@*         <select asp-for="Account.ParentId" class="form-control" *@
-@*                 asp-items="@(new SelectList(Model.ParentAccounts, "Id", "Name"))"> *@
-@*             <option value="">-- None --</option> *@
-@*         </select> *@
-@*         <span asp-validation-for="Account.ParentId" class="text-danger"></span> *@
-@*     </div> *@
-
-@*     <button type="submit" class="btn btn-primary">Save</button> *@
-@*     <a asp-page="List" class="btn btn-secondary">Cancel</a> *@
-@* </form> *@
-
-@* @section Scripts { *@
-@*     <partial name="_ValidationScriptsPartial" /> *@
-@* } *@
 @page
 @model MiniAccountSystem.Pages.ChartOfAccounts.CreateModel
 @{

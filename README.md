@@ -161,10 +161,9 @@ For easy testing of different roles and permissions, the application is pre-seed
 ### 🧾 Voucher List
 ![Voucher List](screenshots/Voucher_List.png)
 ### 🧾 Voucher Entry Form
-![Voucher Entry](screenshots/VoucherCreate.png)
-
+<img src="screenshots/VoucherCreate.png" alt="Voucher Entry" width="600"/>
 ### 🧾 Voucher Edit Form
-![Voucher Edit](screenshots/VoucherEdit.png)
+<img src="screenshots/VoucherEdit.png" alt="Voucher Edit" width="600"/>
 
 
 

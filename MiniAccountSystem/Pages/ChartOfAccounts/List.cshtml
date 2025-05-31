@@ -1,85 +1,4 @@
-﻿@* @page *@
-@* @using MiniAccountSystem.Models *@
-@* @model MiniAccountSystem.Pages.ChartOfAccounts.ListModel *@
-@* @{ *@
-@*     ViewData["Title"] = "Chart of Accounts"; *@
-@* } *@
-
-@* <style> *@
-@*     .tree-view { *@
-@*         padding-left: 20px; *@
-@*     } *@
-
-@*     .tree-item { *@
-@*         position: relative; *@
-@*     } *@
-
-@*         .tree-item:before { *@
-@*             content: ""; *@
-@*             position: absolute; *@
-@*             left: -15px; *@
-@*             top: 0; *@
-@*             border-left: 1px solid #ccc; *@
-@*             height: 100%; *@
-@*         } *@
-
-@*         .tree-item:after { *@
-@*             content: ""; *@
-@*             position: absolute; *@
-@*             left: -15px; *@
-@*             top: 15px; *@
-@*             border-top: 1px solid #ccc; *@
-@*             width: 15px; *@
-@*         } *@
-@* </style> *@
-
-@* <h2>Chart of Accounts</h2> *@
-@* <a href="Create" class="btn btn-success mb-3">Add Account</a> *@
-
-@* <div class="tree-view"> *@
-@*     @RenderAccountTree(Model.Accounts, null, 0) *@
-@* </div> *@
-@* @if (TempData["SuccessMessage"] != null) *@
-@* { *@
-@*     <div class="alert alert-success">@TempData["SuccessMessage"]</div> *@
-@* } *@
-
-
-@* @functions { *@
-@*     public Microsoft.AspNetCore.Html.IHtmlContent RenderAccountTree(List<ChartOfAccount> accounts, int? parentId, int level) *@
-@*     { *@
-@*         var children = accounts.Where(a => a.ParentId == parentId).OrderBy(a => a.Name).ToList(); *@
-
-@*         if (!children.Any() && level == 0) *@
-@*         { *@
-@*             return Html.Raw("<div>No accounts found</div>"); *@
-@*         } *@
-
-@*         var html = new System.Text.StringBuilder(); *@
-
-@*         foreach (var account in children) *@
-@*         { *@
-@*             html.Append($@" *@
-@*                 <div class='tree-item' style='margin-left:{level * 20}px'> *@
-@*                     <div class='d-flex justify-content-between align-items-center'> *@
-@*                         <span>{account.Name}</span> *@
-@*                         <div> *@
-@*                             <a href='Edit?id={account.Id}' class='btn btn-sm btn-primary'>Edit</a> *@
-@*                             <form method='post' asp-page-handler='Delete' asp-route-id='{account.Id}' style='display:inline'> *@
-@*                                 <button type='submit' class='btn btn-sm btn-danger' onclick='return confirm(""Are you sure?"")'>Delete</button> *@
-@*                             </form> *@
-@*                         </div> *@
-@*                     </div> *@
-@*             "); *@
-
-@*             html.Append(RenderAccountTree(accounts, account.Id, level + 1)); *@
-@*             html.Append("</div>"); *@
-@*         } *@
-
-@*         return Html.Raw(html.ToString()); *@
-@*     } *@
-@* } *@
-
+﻿
 @page
 @using MiniAccountSystem.Models
 @model MiniAccountSystem.Pages.ChartOfAccounts.ListModel
@@ -226,6 +145,16 @@
 @functions {
     public Microsoft.AspNetCore.Html.IHtmlContent RenderAccountTree(List<ChartOfAccount> accounts, int? parentId, int level)
     {
+        var html = new System.Text.StringBuilder();
+        if (accounts == null || !accounts.Any())
+        {
+            return Html.Raw(@"
+            <div class='no-accounts'>
+                <i class='fas fa-info-circle fa-2x mb-3'></i>
+                <h5>No accounts found</h5>
+                <p>Start by adding your first account</p>
+            </div>");
+        }
         var children = accounts.Where(a => a.ParentId == parentId).OrderBy(a => a.Name).ToList();
 
         if (!children.Any() && level == 0)
@@ -238,7 +167,7 @@
                 </div>");
         }
 
-        var html = new System.Text.StringBuilder();
+   
 
         foreach (var account in children)
         {
@@ -267,17 +196,20 @@
                             </div>
                             <div class='account-actions'>
                                 <a href='Edit?id={account.Id}' class='btn btn-sm btn-outline-primary'>
-                                    <i class='fas fa-edit'>Edit</i>
+                                    <i class='fas fa-edit'></i> Edit
                                 </a>
-                                <form method='post' asp-page-handler='Delete' asp-route-id='{account.Id}' style='display:inline'>
-                                    <button type='submit' class='btn btn-sm btn-outline-danger' onclick='return confirm(""Are you sure you want to delete this account?"")'>
-                                        <i class='fas fa-trash'>Remove</i>
-                                    </button>
-                                </form>
+                                    <form method='post' asp-page-handler='Delete' style='display:inline'>
+        <input name='__RequestVerificationToken' type='hidden' value='{GetAntiForgeryToken()}' />
+        <input type='hidden' name='id' value='{account.Id}' />
+        <button type='submit' class='btn btn-sm btn-outline-danger'
+                onclick='return confirm(""Are you sure you want to delete this account?"")'>
+            <i class='fas fa-trash'></i> Remove
+        </button>
+    </form>
                             </div>
-                        </div>
-                ");
+                        </div>");
             }
+
 
             // Render child items
             html.Append(RenderAccountTree(accounts, account.Id, level + 1));
@@ -293,6 +225,13 @@
         }
 
         return Html.Raw(html.ToString());
+    }
+
+    private string GetAntiForgeryToken()
+    {
+        var antiforgery = HttpContext.RequestServices.GetService<Microsoft.AspNetCore.Antiforgery.IAntiforgery>();
+        var tokenSet = antiforgery.GetAndStoreTokens(HttpContext);
+        return tokenSet.RequestToken;
     }
 
     public string GetAccountTypeBadge(string accountType)
