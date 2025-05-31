@@ -166,8 +166,8 @@ For easy testing of different roles and permissions, the application is pre-seed
 ### 🧾 AssignModuleAccess Page  
 <img src="screenshots/Admin_AssignModuleAccess.png" alt="AssignModuleAccess Page" width="100%" height="600" />
 
-### 🧾 Account_Login_AssignModuleAccess Page  
-<img src="screenshots/Account_Login_AssignModuleAccess.png" alt="Account_Login_AssignModuleAccess Page"  width="100%" height="600"  />
+<!-- ### 🧾 Account_Login_AssignModuleAccess Page  
+<img src="screenshots/Account_Login_AssignModuleAccess.png" alt="Account_Login_AssignModuleAccess Page"  width="100%" height="600"  /> -->
 
 ### 🚫 AccessDenied Page  
 <img src="screenshots/AccessDenied.png" alt="AccessDenied Page" width="100%" height="600"  />
@@ -185,3 +185,5 @@ For easy testing of different roles and permissions, the application is pre-seed
 - Building a dedicated UI for managing users and roles by an Admin, without direct database interaction.
 - Enhanced client-side validation and user experience with more immediate feedback.
 - Integration with logging frameworks for better error diagnostics and monitoring.
+
+
