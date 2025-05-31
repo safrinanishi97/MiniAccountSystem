@@ -155,7 +155,7 @@ For easy testing of different roles and permissions, the application is pre-seed
 <img src="screenshots/VoucherList.png" alt="Voucher List" width="100%" height="600" />
 
 ### 🧾 Voucher Entry Form  
-<img src="screenshots/VoucherCreate.png" alt="Voucher Entry"width="100%" height="600" />
+<img src="screenshots/VoucherCreate.png" alt="Voucher Entry" width="100%" height="600" />
 
 
 ### 🧾 Voucher Edit Form
@@ -166,9 +166,6 @@ For easy testing of different roles and permissions, the application is pre-seed
 
 ### 🧾 AssignModuleAccess Page  
 <img src="screenshots/Admin_AssignModuleAccess.png" alt="AssignModuleAccess Page" width="100%" height="600" />
-
-<!-- ### 🧾 Account_Login_AssignModuleAccess Page  
-<img src="screenshots/Account_Login_AssignModuleAccess.png" alt="Account_Login_AssignModuleAccess Page"  width="100%" height="600"  /> -->
 
 ### 🚫 AccessDenied Page  
 <img src="screenshots/AccessDenied.png" alt="AccessDenied Page" width="100%" height="600"  />
