@@ -125,87 +125,46 @@ For easy testing of different roles and permissions, the application is pre-seed
 
 
 
-<h2>📸 Screenshots</h2>
+## 📸 Screenshots
 
-<div style="display: flex; justify-content: center;">
-<table style="border: none;">
-  <tr>
-    <td style="padding: 10px;">
-      <h4>🏠 Home Page</h4>
-      <img src="screenshots/Home.png" width="300" height="200"/>
-    </td>
-    <td>
-      <h4>🏠 Admin-Home Page</h4>
-      <img src="screenshots/Home2.png"  width="300" height="200"/>
-    </td>
-  </tr>
+### 🏠 Home Page  
+<img src="screenshots/Home.png" alt="Home Page" width="300" height="280" />
 
-  <tr>
-     <td style="padding: 10px;">
-      <h4>🧾 AssignModuleAccess Page</h4>
-      <img src="screenshots/Admin_AssignModuleAccess.png" width="300" height="200"/>
-    </td>
-    <td>
-      <h4>🧾 Account_Login_AssignModuleAccess Page</h4>
-      <img src="screenshots/Account_Login_AssignModuleAccess.png" width="300" height="200"/>
-    </td>
-  </tr>
+### 🏠 Admin-Home Page  
+<img src="screenshots/Home2.png" alt="Admin-Home Page" width="300" height="280" />
 
-  <tr>
- <td style="padding: 10px;">
-      <h4>🚫 AccessDenied Page</h4>
-      <img src="screenshots/AccessDenied.png" width="300" height="200"/>
-    </td>
-    <td>
-      <h4>🔐 Login Page</h4>
-      <img src="screenshots/Identity_Account_Login.png" width="300" height="200"/>
-    </td>
-  </tr>
+### 🧾 AssignModuleAccess Page  
+<img src="screenshots/Admin_AssignModuleAccess.png" alt="AssignModuleAccess Page" width="300" height="280" />
 
-  <tr>
- <td style="padding: 10px;">
-      <h4>🔐 Register Page</h4>
-      <img src="screenshots/Identity_Account_Register.png" width="300" height="200"/>
-    </td>
-    <td>
-      <h4>🧾 ChartOfAccounts Form</h4>
-      <img src="screenshots/ChartofAccountCreate.png" width="300" height="200"/>
-    </td>
-  </tr>
+### 🧾 Account_Login_AssignModuleAccess Page  
+<img src="screenshots/Account_Login_AssignModuleAccess.png" alt="Account_Login_AssignModuleAccess Page" width="300" height="280" />
 
-  <tr>
-    <td style="padding: 10px;">
-      <h4>🧾 ChartOfAccounts List</h4>
-      <img src="screenshots/ChartOfAccounts_List.png" width="300" height="200"/>
-    </td>
-    <td>
-      <h4>🧾 ChartOfAccounts Index</h4>
-      <img src="screenshots/ChartOfAccounts_Index.png" width="300" height="200"/>
-    </td>
-  </tr>
+### 🚫 AccessDenied Page  
+<img src="screenshots/AccessDenied.png" alt="AccessDenied Page" width="300" height="280" />
 
-  <tr>
-     <td style="padding: 10px;">
-      <h4>🧾 Voucher Entry Form</h4>
-      <img src="screenshots/VoucherCreate.png" width="300" height="200"/>
-    </td>
-    <td>
-      <h4>🧾 Voucher Edit Form</h4>
-      <img src="screenshots/VoucherEdit.png" width="300" height="200"/>
-    </td>
-  </tr>
+### 🔐 Login Page  
+<img src="screenshots/Identity_Account_Login.png" alt="Login Page" width="300" height="280" />
 
-  <tr>
-     <td style="padding: 10px;">
-      <h4>🧾 Voucher List</h4>
-      <img src="screenshots/Voucher_List.png"  width="300" height="200"/>
-    </td>
-  </tr>
-</table>
+### 🔐 Register Page  
+<img src="screenshots/Identity_Account_Register.png" alt="Register Page" width="300" height="280" />
 
-</div>
+### 🧾 ChartOfAccounts Form  
+<img src="screenshots/ChartofAccountCreate.png" alt="ChartOfAccounts Form" width="300" height="280" />
 
+### 🧾 ChartOfAccounts List  
+<img src="screenshots/ChartOfAccounts_List.png" alt="ChartOfAccounts List" width="300" height="280" />
 
+### 🧾 ChartOfAccounts Index  
+<img src="screenshots/ChartOfAccounts_Index.png" alt="ChartOfAccounts Index" width="300" height="280" />
+
+### 🧾 Voucher List  
+<img src="screenshots/Voucher_List.png" alt="Voucher List" width="300" height="280" />
+
+### 🧾 Voucher Entry Form  
+<img src="screenshots/VoucherCreate.png" alt="Voucher Entry" width="300" height="280" />
+
+### 🧾 Voucher Edit Form  
+<img src="screenshots/VoucherEdit.png" alt="Voucher Edit" width="300" height="280" />
 
 
 ## Future Enhancements
