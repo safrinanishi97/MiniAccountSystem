@@ -87,17 +87,65 @@ namespace MiniAccountSystem.Pages.Vouchers
 
         private void LoadAccounts()
         {
-            // Example static list - replace with DB query if needed
-            AccountList = new List<SelectListItem>
-        {
-            new("Cash", "1"),
-            new("Bank", "2"),
-            new("Receivable", "3")
-        };
+            string connectionString = _config.GetConnectionString("DefaultConnection")
+            ?? throw new ArgumentNullException("Connection string is missing!");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentNullException("Connection string is missing!");
+            }
+
+            try
+            {
+                using (var con = new SqlConnection(connectionString))
+                {
+                    var cmd = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts ORDER BY Name", con);
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    AccountList = new List<SelectListItem>();
+                    while (reader.Read())
+                    {
+                        AccountList.Add(new SelectListItem
+                        {
+                            Text = reader["Name"].ToString(),
+                            Value = reader["Id"].ToString()
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the error here
+                // For now, fall back to empty list
+                AccountList = new List<SelectListItem>();
+            }
         }
     }
 
 }
+
+
+//private void LoadAccounts()
+//{
+//    string connectionString = _config.GetConnectionString("DefaultConnection");
+
+//    using (var con = new SqlConnection(connectionString))
+//    {
+//        var cmd = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts ORDER BY Name", con);
+//        con.Open();
+//        var reader = cmd.ExecuteReader();
+
+//        AccountList = new List<SelectListItem>();
+//        while (reader.Read())
+//        {
+//            AccountList.Add(new SelectListItem
+//            {
+//                Text = reader["Name"].ToString(),
+//                Value = reader["Id"].ToString()
+//            });
+//        }
+//    }
+//}
 
 
 
