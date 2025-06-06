@@ -4,3 +4,4 @@ CREATE TABLE [dbo].[ModuleAccess] (
     [ModuleName] NVARCHAR (100) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+

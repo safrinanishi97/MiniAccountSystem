@@ -19,20 +19,31 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
+
+
+
+
     <div class="card shadow mb-4">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">
-                <i class="bi bi-list-ul"></i> Chart of Accounts
-            </h3>
-            <div>
-                <a asp-page-handler="ExportToExcel" class="btn btn-success me-2">
-                    <i class="bi bi-file-excel"></i> Export Excel
-                </a>
-                <a asp-page="Create" class="btn btn-light">
-                    <i class="bi bi-plus-circle"></i> Add New
-                </a>
+
+    <div class="card border-0 shadow-lg" style="background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);">
+        <div class="card-header bg-dark-gradient text-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="bi bi-list-ul me-2"></i> Chart of Accounts
+                </h3>
+                <div>
+                    <a asp-page-handler="ExportToExcel" class="btn btn-outline-light me-2">
+                        <i class="bi bi-file-excel"></i> Export Excel
+                    </a>
+                        <a asp-page="Create" class="btn btn-outline-light">
+                        <i class="bi bi-plus-circle"></i> Add New
+                    </a>
+                </div>
             </div>
         </div>
+    </div>
+
+        <div class="card border-0 shadow-lg" style="background: linear-gradient(135deg,rgba(0, 0, 0, 0.1) 0%,rgba(0, 0, 100, 0.3) 100%);">
         <div class="card-body">
             <ul class="nav nav-tabs" id="accountsTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -46,12 +57,13 @@
                     </button>
                 </li>
             </ul>
-            <div class="tab-content p-3 border border-top-0 rounded-bottom" id="accountsTabContent">
+            
+            <div class="tab-content p-0 border border-top-0 rounded-bottom" id="accountsTabContent">
                 <div class="tab-pane fade show active" id="table-view" role="tabpanel" aria-labelledby="table-tab">
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped border-2">
                             <thead class="table-dark">
-                                <tr style="align-items:center">
+                                <tr>
                                     <th>ID</th>
                                     <th>Account Name</th>
                                     <th>Parent Account</th>
@@ -61,19 +73,21 @@
                             <tbody>
                                 @foreach (var account in Model.Accounts)
                                 {
-                                    <tr style="align-items:center">
+                                    <tr>
                                         <td>@account.Id</td>
                                         <td>@account.Name</td>
-                                        <td>@(account.ParentName ?? "N/A")</td>
+                                        <td>@(account.ParentName ?? "<Root Account>")</td>
                                         <td>
-                                            <div class="btn-group" role="group" >
+                                            
+
+                                            <div class="account-actions">
                                                 <a asp-page="Edit" asp-route-id="@account.Id" class="btn btn-sm btn-outline-primary">
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </a>
-                                                <form method="post" asp-page-handler="Delete" asp-route-id="@account.Id"
-                                                      onsubmit="return confirm('Are you sure you want to delete this account?');">
+                                                <form method="post" asp-page="List" asp-page-handler="Delete" asp-route-id="@account.Id"
+                                                      onsubmit="return confirm('Are you sure you want to delete this account?');" style="display:inline;">
                                                     <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                        <i class="bi bi-trash"></i> Delete
+                                                        <i class="bi bi-trash"></i> Remove
                                                     </button>
                                                 </form>
                                             </div>
@@ -91,6 +105,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
 </div>
 
@@ -103,9 +118,18 @@
             letter-spacing: 0.5px;
         }
 
-        .table td {
+      
+
+        .table-dark th {
+            font-size: 0.9rem;
             vertical-align: middle;
         }
+        .table td,
+        .table th {
+            text-align: center;
+            vertical-align: middle;
+        }
+       
 
         .btn-group .btn {
             border-radius: 0.25rem !important;
@@ -116,7 +140,48 @@
             font-size: 0.875rem;
         }
 
+        #table-view {
+            padding: 2px 15px;
+            background-color:#ddd;
+        }
+
         /* Tree view styles */
+
+        #accountsTab{
+            background: #2e3a59;
+            height: 3.5rem;
+        }
+      
+        #accountsTab .nav-link {
+                color: #fff !important;
+            background-color: transparent;
+  
+            padding: 1rem 1rem;
+            margin: 0;
+        }
+
+            #accountsTab .nav-link:hover {
+                color: black !important;
+                background-color: lightgray;
+                box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);  
+                    transform: translateX(2px);
+                padding: 1rem 1rem;
+                margin: 0;
+                    transition: .3s;
+            }
+
+            #accountsTab .nav-link.active {
+                    color: #fff !important;
+                    background-color: #3a4669;
+                border-bottom: 1px solid #eee;
+                font-weight: 500;
+            }
+
+                #accountsTab .nav-link.active:after {
+                    display: none;
+                    
+                }
+
         .tree, .tree ul {
             list-style: none;
             padding-left: 1.5rem;
@@ -178,6 +243,12 @@
 
         .tree li .tree-item:hover .tree-actions {
             opacity: 1;
+        }
+
+        .account-actions .btn {
+            margin-left: 5px;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
         }
     </style>
 }

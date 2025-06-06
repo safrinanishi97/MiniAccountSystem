@@ -18,7 +18,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
 })
-.AddRoles<IdentityRole>() // ✅ This adds role support
+.AddRoles<IdentityRole>() 
 .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddSingleton<PermissionService>();
 

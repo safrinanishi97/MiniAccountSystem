@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using MiniAccountSystem.Models;
 using System.Data;
-using System.Collections.Generic; // Make sure this is included
-using System.Threading.Tasks;    // Make sure this is included
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace MiniAccountSystem.Pages.Vouchers
 {
@@ -18,19 +19,26 @@ namespace MiniAccountSystem.Pages.Vouchers
         public List<SelectListItem> AccountList { get; set; } = new();
 
         private readonly IConfiguration _config;
-        public CreateModel(IConfiguration config)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public CreateModel(IConfiguration config, UserManager<IdentityUser> userManager)
         {
             _config = config;
+            _userManager = userManager;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
             LoadAccounts();
             // One default line
             Voucher.VoucherDetails.Add(new VoucherDetailDto());
+            Voucher.CreatedDate = DateTime.Now;
+            var user = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(user);
+            ViewData["UserWithRole"] = $"{User.Identity?.Name} ({roles.FirstOrDefault()})";
         }
 
-        public IActionResult OnPost()
+        public async Task <IActionResult> OnPost()
         {
             LoadAccounts();
 
@@ -45,6 +53,12 @@ namespace MiniAccountSystem.Pages.Vouchers
 
             try
             {
+                var user = await _userManager.GetUserAsync(User);
+                var roles = await _userManager.GetRolesAsync(user);
+                var primaryRole = roles.FirstOrDefault() ?? "User";
+
+                // Format: "Username (Role)"
+                var createdBy = $"{User.Identity?.Name ?? "System"} ({primaryRole})";
                 using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
                 using var cmd = new SqlCommand("sp_SaveVoucher", conn)
                 {
@@ -56,7 +70,7 @@ namespace MiniAccountSystem.Pages.Vouchers
                 cmd.Parameters.AddWithValue("@VoucherType", Voucher.VoucherType);
                 cmd.Parameters.AddWithValue("@VoucherDate", Voucher.VoucherDate);
                 cmd.Parameters.AddWithValue("@ReferenceNo", Voucher.ReferenceNo);
-                cmd.Parameters.AddWithValue("@CreatedBy", User.Identity?.Name ?? "Admin"); // Or fixed user
+                cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
 
                 // Build table-valued parameter
                 var dt = new DataTable();
@@ -84,21 +98,15 @@ namespace MiniAccountSystem.Pages.Vouchers
             }
         }
 
-
         private void LoadAccounts()
         {
             string connectionString = _config.GetConnectionString("DefaultConnection")
-            ?? throw new ArgumentNullException("Connection string is missing!");
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new ArgumentNullException("Connection string is missing!");
-            }
+                ?? throw new ArgumentNullException("Connection string is missing!");
 
             try
             {
                 using (var con = new SqlConnection(connectionString))
                 {
-
                     var cmd = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts ORDER BY Name", con);
                     con.Open();
                     var reader = cmd.ExecuteReader();
@@ -122,63 +130,5 @@ namespace MiniAccountSystem.Pages.Vouchers
                 AccountList = new List<SelectListItem>();
             }
         }
-
-    //    private void LoadAccounts()
-    //    {
-
-    //        try
-    //        {
-
-    //            // Clear existing items first
-    //            AccountList = new List<SelectListItem>();
-
-    //            // Add default empty option (for better UX)
-    //            AccountList.Add(new SelectListItem("-- Select Account --", ""));
-
-    //            using var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-
-    //            // Query to get active accounts sorted by name
-    //            string query = @"SELECT c.Id, c.Name, 
-    //            CASE WHEN c.ParentId IS NULL THEN c.Name 
-    //            ELSE '    ' + c.Name END AS DisplayName
-    //            FROM ChartOfAccounts c
-              
-    //            ORDER BY COALESCE(c.ParentId, c.Id), c.Id";
-
-    //            using var command = new SqlCommand(query, connection);
-    //            connection.Open();
-
-    //            using var reader = command.ExecuteReader();
-
-    //            while (reader.Read())
-    //            {
-    //                AccountList.Add(new SelectListItem
-    //                {
-    //                    Text = reader["Name"].ToString(),
-    //                    Value = reader["Id"].ToString()
-    //                });
-    //            }
-    //        }
-    //        catch (SqlException ex)
-    //        {
-    //            // Log error (in production, use ILogger)
-    //            Console.WriteLine($"Database error: {ex.Message}");
-
-    //            // Show user-friendly message
-    //            ViewData["ErrorMessage"] = "There is an unexpected error, Please try again!!";
-
-    //            // Fallback to empty list
-    //            AccountList = new List<SelectListItem>();
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            Console.WriteLine($"Unexpected error: {ex.Message}");
-    //            ViewData["ErrorMessage"] = "An unexpected error";
-    //            AccountList = new List<SelectListItem>();
-    //        }
-    //    }
     }
-
 }
-
-

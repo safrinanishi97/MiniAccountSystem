@@ -8,6 +8,7 @@ C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\MiniAccountSystem.pdb
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\EPPlus.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\Humanizer.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -62,6 +63,7 @@ C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\System.Security.Permissions.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\System.Xml.XPath.XmlDocument.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -152,5 +154,3 @@ C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.pdb
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\MiniAccountSystem.genruntimeconfig.cache
 C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\obj\Debug\net8.0\ref\MiniAccountSystem.dll
-C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\EPPlus.dll
-C:\Users\Lenovo\Desktop\QtechTask\MiniAccountSystem\MiniAccountSystem\bin\Debug\net8.0\System.Xml.XPath.XmlDocument.dll

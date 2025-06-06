@@ -5,14 +5,17 @@
 }
 
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Voucher List</h2>
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+        <h2 class="mb-0 text-dark">
+            <i class="fas fa-file-invoice me-2"></i> Voucher List
+        </h2>
         <div>
-            <a asp-page-handler="ExportToExcel" class="btn btn-success me-2">
-                <i class="fas fa-file-excel"></i> Export to Excel
+            <a asp-page-handler="ExportToExcel" class="btn btn-outline-dark me-2">
+                <i class="fas fa-file-excel me-2"></i> Export to Excel
             </a>
-            <a asp-page="Create" class="btn btn-primary">
-                <i class="fas fa-plus-circle"></i> Create New Voucher
+            <a asp-page="Create" class="btn btn-outline-dark">
+                <i class="fas fa-plus-circle me-2"></i> Create New
             </a>
         </div>
     </div>
@@ -23,29 +26,29 @@
             @foreach (var voucher in Model.Vouchers)
             {
                 <div class="col-md-12 mb-4">
-                    <div class="card voucher-card">
+                    <div class="card voucher-card border-0">
                         <!-- Voucher Header -->
-                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                            <div class="voucher-header-info">
+                        <div class="card-header bg-dark-gradient d-flex justify-content-between align-items-center py-3">
+                            <div class="voucher-header-info text-white">
                                 <div class="d-flex align-items-center">
-                                    <span class="badge bg-primary me-2">@voucher.VoucherType</span>
-                                    <span class="text-muted me-3">
+                                    <span class="badge bg-primary-soft me-3 text-uppercase">@voucher.VoucherType</span>
+                                    <span class="me-3">
                                         <i class="far fa-calendar-alt me-1"></i> @voucher.VoucherDate.ToString("dd MMM yyyy")
                                     </span>
-                                    <span class="text-muted">
+                                    <span>
                                         <i class="fas fa-hashtag me-1"></i> @voucher.ReferenceNo
                                     </span>
                                 </div>
                             </div>
                             <div class="voucher-actions">
-                                <span class="text-muted me-2">ID: @voucher.VoucherId</span>
+                                <span class="text-white me-3">ID: @voucher.VoucherId</span>
                                 <div class="btn-group">
-                                    <a asp-page="Edit" asp-route-id="@voucher.VoucherId" class="btn btn-sm btn-outline-secondary">
+                                    <a asp-page="Edit" asp-route-id="@voucher.VoucherId" class="btn btn-sm btn-outline-light">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form method="post" asp-page-handler="Delete" class="d-inline">
                                         <input type="hidden" name="id" value="@voucher.VoucherId" />
-                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        <button type="submit" class="btn btn-sm btn-outline-light"
                                                 onclick="return confirm('Are you sure you want to delete this voucher?')">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
@@ -58,25 +61,25 @@
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
-                                    <thead class="table-light">
+                                    <thead>
                                         <tr>
-                                            <th width="40%">Account</th>
+                                            <th width="40%" class="ps-4">Account</th>
                                             <th width="30%" class="text-end">Debit (৳)</th>
-                                            <th width="30%" class="text-end">Credit (৳)</th>
+                                            <th width="30%" class="text-end pe-4">Credit (৳)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var detail in voucher.VoucherDetails)
                                         {
                                             <tr>
-                                                <td>
+                                                <td class="ps-4">
                                                     <div class="fw-bold">@detail.AccountName</div>
                                                     <small class="text-muted">@detail.AccountId</small>
                                                 </td>
                                                 <td class="text-end text-success fw-bold">
                                                     @detail.DebitAmount.ToString("N2")
                                                 </td>
-                                                <td class="text-end text-danger fw-bold">
+                                                <td class="text-end text-danger fw-bold pe-4">
                                                     @detail.CreditAmount.ToString("N2")
                                                 </td>
                                             </tr>
@@ -84,9 +87,9 @@
                                     </tbody>
                                     <tfoot class="table-active">
                                         <tr>
-                                            <th>Total</th>
+                                            <th class="ps-4">Total</th>
                                             <th class="text-end">@voucher.VoucherDetails.Sum(d => d.DebitAmount).ToString("N2")</th>
-                                            <th class="text-end">@voucher.VoucherDetails.Sum(d => d.CreditAmount).ToString("N2")</th>
+                                            <th class="text-end pe-4">@voucher.VoucherDetails.Sum(d => d.CreditAmount).ToString("N2")</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -94,16 +97,61 @@
                         </div>
 
                         <!-- Voucher Footer -->
-                        @* <div class="card-footer bg-light text-muted"> *@
-                        @*     <div class="d-flex justify-content-between"> *@
-                        @*         <small> *@
-                        @*             <i class="fas fa-user-circle me-1"></i> Created by: @(voucher.CreatedBy ?? "System") *@
-                        @*         </small> *@
-                        @*         <small> *@
-                        @*             <i class="far fa-clock me-1"></i> @voucher.CreatedDate?.ToString("dd MMM yyyy hh:mm tt") *@
-                        @*         </small> *@
-                        @*     </div> *@
-                        @* </div> *@
+                        <div class="card-footer bg-light text-muted">
+                            <div class="row">
+                                <!-- Left side (Created info) -->
+                                <div class="col-md-6">
+                                    <small>
+                                        <i class="fas fa-user-circle me-1"></i>
+                                        <strong>Created By:</strong>
+                                        @if (voucher.CreatedBy.Contains("("))
+                                        {
+                                            var parts = voucher.CreatedBy.Split(new[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+                                            <span>@parts[0] <span class="badge bg-secondary">@parts[1]</span></span>
+                                        }
+                                        else
+                                        {
+                                            @voucher.CreatedBy
+                                        }
+                                    </small>
+                                    <br>
+                                    <small>
+                                        <i class="far fa-clock me-1"></i>
+                                        <strong>Created At:</strong> @voucher.CreatedDate.ToString("dd MMM yyyy hh:mm tt")
+                                    </small>
+                                </div>
+
+                                <!-- Right side (Updated info) -->
+                                <div class="col-md-6 text-md-end">
+                                    <small>
+                                        <i class="fas fa-user-edit me-1"></i>
+                                        <strong>Updated By:</strong>
+                                        @if (!string.IsNullOrEmpty(voucher.UpdatedBy))
+                                        {
+                                            if (voucher.UpdatedBy.Contains("("))
+                                            {
+                                                var parts = voucher.UpdatedBy.Split(new[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+                                                <span>@parts[0] <span class="badge bg-secondary">@parts[1]</span></span>
+                                            }
+                                            else
+                                            {
+                                                @voucher.UpdatedBy
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <em>Not updated</em>
+                                        }
+                                    </small>
+                                    <br>
+                                    <small>
+                                        <i class="far fa-clock me-1"></i>
+                                        <strong>Updated At:</strong>
+                                        @(voucher.UpdatedDate.HasValue ? voucher.UpdatedDate.Value.ToString("dd MMM yyyy hh:mm tt") : "N/A")
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
@@ -111,52 +159,120 @@
     }
     else
     {
-        <div class="alert alert-info">
+        <div class="alert alert-info-gradient">
             <i class="fas fa-info-circle me-2"></i> No vouchers found. Create your first voucher to get started.
         </div>
     }
 </div>
 
-<style>
-    .voucher-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-    }
-
-        .voucher-card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
+@section Styles {
+    <style>
+        /* Gradient Backgrounds */
+        .bg-dark-gradient {
+            background: linear-gradient(135deg,#3A5169 0%, #2E2E2E 100%) !important;
+            color: white;
         }
 
-        .voucher-card .card-header {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 12px 20px;
+        .bg-light-gradient {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
         }
 
-        .voucher-card .table {
-            margin-bottom: 0;
+        .bg-primary-gradient {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%) !important;
+            color: white;
+            border: none;
         }
 
-            .voucher-card .table th {
+        .bg-success-gradient {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%) !important;
+            color: white;
+            border: none;
+        }
+
+        .alert-info-gradient {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+
+        .bg-primary-soft {
+            background-color: #f8f9fa;
+            color: black;
+            padding:2px;
+        }
+
+        /* Card Styling */
+        .voucher-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+            .voucher-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            }
+
+        /* Table Styling */
+       
+            .table thead th {
                 text-transform: uppercase;
-                font-size: 0.75rem;
+                font-size: 0.85rem;
                 letter-spacing: 0.5px;
+                padding: 1rem 1.5rem;
+            background-color: rgba(150, 150, 255, 0.15);
+                border-bottom: 1px solid #1a1a1a;
             }
 
-            .voucher-card .table td,
-            .voucher-card .table th {
-                vertical-align: middle;
-                padding: 12px 16px;
-            }
+        .table tbody td {
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        /* Typography */
+        .text-success {
+            color: #28a745 !important;
+        }
+
+        .text-danger {
+            color: #dc3545 !important;
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.35em 0.65em;
+            border-radius: 0.25rem;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .btn-outline-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
 
         .voucher-card .card-footer {
             font-size: 0.85rem;
             padding: 10px 20px;
         }
-</style>
+    </style>
+}
 
 @section Scripts {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />

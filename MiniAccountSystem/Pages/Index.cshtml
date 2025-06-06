@@ -1,89 +1,536 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Mini Account System";
+    ViewData["Title"] = "Mini Account System | Professional Accounting Solutions";
+    ViewData["NoContainerPadding"] = true;
 }
 
-<!-- Hero Section -->
-<div class="hero-section">
+<!-- Hero Section with Modern Gradient & Animation -->
+<div class="hero-section position-relative overflow-hidden">
     <div class="container py-5">
         <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">Welcome to Mini Account System</h1>
-                <p class="lead mb-4">Streamline your financial management with our powerful accounting solution</p>
-                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-lg-start">
-                    <a class="btn btn-outline-primary btn-lg px-4 gap-3" href="/Admin/AssignModuleAccess">Assign Module Access</a>
-                    <a class="btn btn-outline-secondary btn-lg px-4 gap-3" href="/ChartOfAccounts/Index">Chart of Accounts</a>
-                    <a class="btn btn-outline-primary btn-lg px-4" href="/Vouchers/Index">Voucher Entry</a>
+            <div class="col-lg-6 pe-lg-5">
+                <div class="mb-4">
+                    <span class="badge bg-white text-primary fw-bold px-3 py-2 mb-3 d-inline-flex align-items-center">
+                        <i class="bi bi-star-fill me-2"></i> Trusted by 10,000+ Businesses
+                    </span>
+                </div>
+                <h1 class="display-4 fw-bold mb-4 text-white">Enterprise-Grade Accounting <span class="text-warning">Simplified</span></h1>
+                <p class="lead mb-4 text-white-80">Streamline your financial operations with our AI-powered accounting platform designed for precision and efficiency.</p>
+                <div class="d-flex flex-wrap gap-3 mb-5">
+                    <a class="btn btn-light btn-lg px-4 rounded-1 fw-bold shadow-sm" href="/Identity/Account/Register">
+                        Start Free Trial <i class="bi bi-chevron-right ms-2"></i>
+                    </a>
+                    <a class="btn btn-outline-light btn-lg px-4 rounded-1 border-2" href="#features">
+                        Explore Features <i class="bi bi-grid-3x3-gap ms-2"></i>
+                    </a>
+                </div>
+
+                <!-- Trust indicators with logos -->
+                <div class="trust-badges d-flex align-items-center flex-wrap gap-4 mt-4">
+                    <div class="d-flex align-items-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" alt="Stripe" style="height: 20px;" class="me-2">
+                        <span class="text-white-60">Payments</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/SOC_2_Type_2.svg/1200px-SOC_2_Type_2.svg.png" alt="SOC 2" style="height: 20px;" class="me-2">
+                        <span class="text-white-60">Certified</span>
+                    </div>
                 </div>
             </div>
-            @* <div class="col-lg-6"> *@
-            @*     <img src="https://via.placeholder.com/600x400" alt="Accounting Dashboard" class="img-fluid rounded shadow"> *@
-            @* </div> *@
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="hero-image-container position-relative">
+                    <div class="dashboard-preview shadow-lg rounded-3 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                             alt="Accounting Dashboard"
+                             class="img-fluid">
+                    </div>
+                    <div class="floating-card card-1 shadow-sm">
+                        <div class="card-body p-2">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success bg-opacity-10 p-2 rounded me-2">
+                                    <i class="bi bi-graph-up text-success"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold">$25,430</div>
+                                    <small class="text-muted">Monthly Revenue</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floating-card card-2 shadow-sm">
+                        <div class="card-body p-2">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded me-2">
+                                    <i class="bi bi-cash-stack text-primary"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold">142</div>
+                                    <small class="text-muted">Processed Vouchers</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated wave shape divider -->
+    <div class="wave-shape">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#fff"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#fff"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#fff"></path>
+        </svg>
+    </div>
+</div>
+
+<!-- Logo Cloud Section with Grayscale Effect -->
+<div class="bg-white py-5">
+    <div class="container">
+        <div class="row justify-content-center align-items-center g-4">
+            <div class="col-6 col-md-2 text-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png" alt="Amazon" class="img-fluid grayscale" style="height: 30px; opacity: 0.7;">
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+                     alt="Apple Logo"
+                     class="img-fluid"
+                     style="height: 40px;">
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+                     alt="Google"
+                     style="height: 30px;">
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/2560px-Microsoft_logo_%282012%29.svg.png" alt="Microsoft" class="img-fluid grayscale" style="height: 20px; opacity: 0.7;">
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Features Section -->
-<div class="container mb-5">
-    <h2 class="text-center mb-5">Key Features</h2>
+<!-- Features Section with Tabs -->
+<div class="container py-5 my-4" id="features">
+    <div class="text-center mb-5">
+        <span class="badge bg-primary bg-opacity-10 text-primary fw-normal mb-3">FEATURES</span>
+        <h2 class="fw-bold mb-3">Powerful Financial Tools <br>for Modern Businesses</h2>
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+            Comprehensive accounting solutions designed to save you time and provide actionable financial insights
+        </p>
+    </div>
+
+    <!-- Feature Tabs -->
     <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-diagram-3 fs-1 text-primary mb-3"></i>
-                    <h3>Chart of Accounts</h3>
-                    <p>Manage your financial accounts with hierarchical structure</p>
-                </div>
+        <div class="col-lg-4">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <button class="nav-link active d-flex align-items-center text-start p-4 mb-2 rounded-2" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab">
+                    <div class="feature-icon bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-diagram-3 fs-4 text-primary"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Chart of Accounts</h5>
+                        <small class="text-muted">Organize your financial structure</small>
+                    </div>
+                </button>
+                <button class="nav-link d-flex align-items-center text-start p-4 mb-2 rounded-2" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab">
+                    <div class="feature-icon bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-receipt fs-4 text-success"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Voucher Management</h5>
+                        <small class="text-muted">Streamline transactions</small>
+                    </div>
+                </button>
+                <button class="nav-link d-flex align-items-center text-start p-4 mb-2 rounded-2" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab">
+                    <div class="feature-icon bg-info bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-graph-up fs-4 text-info"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Financial Reports</h5>
+                        <small class="text-muted">Real-time analytics</small>
+                    </div>
+                </button>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-receipt fs-1 text-primary mb-3"></i>
-                    <h3>Voucher Management</h3>
-                    <p>Create and manage journal, payment and receipt vouchers</p>
+        <div class="col-lg-8">
+            <div class="tab-content p-4 bg-white rounded-3 shadow-sm" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h3 class="fw-bold mb-3">Intuitive Account Structure</h3>
+                            <p class="text-muted mb-4">Create and manage your financial accounts with our hierarchical structure that adapts to your business needs, from simple to complex organizational requirements.</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> Multi-level account hierarchy</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> Custom account types</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> Automated balance tracking</li>
+                            </ul>
+                            <a href="/ChartOfAccounts/Index" class="btn btn-outline-primary rounded-1">
+                                Explore Chart of Accounts <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Chart of Accounts" class="img-fluid rounded-2 shadow">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-graph-up fs-1 text-primary mb-3"></i>
-                    <h3>Financial Reports</h3>
-                    <p>Generate essential financial reports with one click</p>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h3 class="fw-bold mb-3">Efficient Voucher Processing</h3>
+                            <p class="text-muted mb-4">Create, edit, approve, and track all types of vouchers with our streamlined workflow designed to minimize errors and maximize efficiency.</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Multiple voucher types</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Approval workflows</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Digital audit trails</li>
+                            </ul>
+                            <a href="/Vouchers/Index" class="btn btn-outline-success rounded-1">
+                                Explore Voucher Management <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Voucher Management" class="img-fluid rounded-2 shadow">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h3 class="fw-bold mb-3">Comprehensive Reporting</h3>
+                            <p class="text-muted mb-4">Generate detailed financial reports including balance sheets, profit & loss statements, cash flow analysis, and custom reports tailored to your needs.</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-info me-2"></i> Real-time data visualization</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-info me-2"></i> Export to multiple formats</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-info me-2"></i> Scheduled report generation</li>
+                            </ul>
+                            <a href="/Reports" class="btn btn-outline-info rounded-1">
+                                Explore Financial Reports <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Financial Reports" class="img-fluid rounded-2 shadow">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- CTA Section -->
-<div class="bg-dark text-white py-5">
-    <div class="container text-center">
-        <h2 class="mb-4">Ready to streamline your accounting?</h2>
-        <a href="/Identity/Account/Register" class="btn btn-light btn-lg px-4 me-2">Sign Up Free</a>
-        <a href="/Identity/Account/Login" class="btn btn-outline-light btn-lg px-4">Login</a>
+<!-- Stats Section -->
+<div class="bg-light py-5">
+    <div class="container py-4">
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <div class="display-5 fw-bold text-primary mb-2">98%</div>
+                <div class="text-muted">Customer Satisfaction</div>
+            </div>
+            <div class="col-md-3">
+                <div class="display-5 fw-bold text-primary mb-2">10K+</div>
+                <div class="text-muted">Businesses Trust Us</div>
+            </div>
+            <div class="col-md-3">
+                <div class="display-5 fw-bold text-primary mb-2">24/7</div>
+                <div class="text-muted">Support Availability</div>
+            </div>
+            <div class="col-md-3">
+                <div class="display-5 fw-bold text-primary mb-2">99.9%</div>
+                <div class="text-muted">Uptime Guarantee</div>
+            </div>
+        </div>
     </div>
+</div>
+
+<!-- Testimonial Section with Carousel -->
+<div class="container py-5 my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 text-center">
+            <span class="badge bg-primary bg-opacity-10 text-primary fw-normal mb-3">TESTIMONIALS</span>
+            <h2 class="fw-bold mb-5">Trusted by Finance Professionals <br> Worldwide</h2>
+
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="testimonial-card bg-white p-5 rounded-3 shadow-sm mx-auto" style="max-width: 800px;">
+                            <div class="rating mb-3">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p class="lead fst-italic mb-4">
+                                "Mini Account System has transformed our financial operations. The automation features saved us over 20 hours per week in manual work, and the reporting gives us insights we never had before."
+                            </p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="https://randomuser.me/api/portraits/women/45.jpg"
+                                     alt="Sarah Johnson"
+                                     class="rounded-circle me-3"
+                                     width="60">
+                                <div class="text-start">
+                                    <h5 class="mb-0">Sarah Johnson</h5>
+                                    <p class="text-muted mb-0">CFO, TechSolutions Inc.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial-card bg-white p-5 rounded-3 shadow-sm mx-auto" style="max-width: 800px;">
+                            <div class="rating mb-3">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p class="lead fst-italic mb-4">
+                                "As a small business owner, I needed accounting software that was powerful yet simple. Mini Account System delivers both - it handles all our needs without the complexity of enterprise solutions."
+                            </p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                                     alt="Michael Chen"
+                                     class="rounded-circle me-3"
+                                     width="60">
+                                <div class="text-start">
+                                    <h5 class="mb-0">Michael Chen</h5>
+                                    <p class="text-muted mb-0">Owner, Brightside Retail</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-primary rounded-circle" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-primary rounded-circle" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section with Gradient -->
+<div class="cta-section py-5 position-relative overflow-hidden">
+    <div class="container py-4 position-relative">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 fw-bold text-white mb-4">Ready to Transform Your Accounting?</h2>
+                <p class="lead text-white-80 mb-5">Join thousands of businesses that trust Mini Account System for their financial management.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="/Identity/Account/Register" class="btn btn-light btn-lg px-4 rounded-1 fw-bold shadow-sm">
+                        Start Free Trial <i class="bi bi-chevron-right ms-2"></i>
+                    </a>
+                    <a href="/Demo" class="btn btn-outline-light btn-lg px-4 rounded-1 border-2">
+                        Watch Demo <i class="bi bi-play-circle ms-2"></i>
+                    </a>
+                </div>
+                <div class="mt-4 text-white-60">
+                    <small>No credit card required · 14-day free trial · Cancel anytime</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated background elements -->
+    <div class="cta-shape-1"></div>
+    <div class="cta-shape-2"></div>
 </div>
 
 <style>
+    /* Modern Hero Section */
     .hero-section {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 0 0 20px 20px;
-        margin-bottom: 3rem;
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        padding: 6rem 0 8rem;
+        color: white;
     }
 
-    .card {
-        transition: transform 0.3s;
+
+    .text-white-80 {
+        color: rgba(255, 255, 255, 0.8);
     }
 
-        .card:hover {
-            transform: translateY(-5px);
+    .text-white-60 {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .dashboard-preview {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transform: perspective(1000px) rotateY(-10deg);
+        transition: all 0.3s ease;
+    }
+
+        .dashboard-preview:hover {
+            transform: perspective(1000px) rotateY(-5deg);
         }
+
+    .floating-card {
+        position: absolute;
+        background: white;
+        border-radius: 8px;
+        width: 180px;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .card-1 {
+        top: -20px;
+        left: -30px;
+        animation-delay: 0s;
+    }
+
+    .card-2 {
+        bottom: -20px;
+        right: -30px;
+        animation-delay: 2s;
+    }
+
+    .trust-badges img {
+        filter: brightness(0) invert(1);
+        opacity: 0.8;
+    }
+
+    /* Wave shape divider */
+    .wave-shape {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+    }
+
+        .wave-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 100px;
+        }
+
+    /* Logo cloud */
+    .grayscale {
+        filter: grayscale(100%);
+        transition: all 0.3s ease;
+    }
+
+        .grayscale:hover {
+            filter: grayscale(0%);
+            opacity: 1 !important;
+        }
+
+    /* Feature tabs */
+    .feature-icon {
+        transition: all 0.3s ease;
+    }
+
+    .nav-pills .nav-link {
+        border-left: 3px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+        .nav-pills .nav-link.active {
+            background: rgba(13, 110, 253, 0.05);
+            border-left: 3px solid #0d6efd;
+            color: #0d6efd;
+        }
+
+    /* Testimonials */
+    .testimonial-card {
+        transition: all 0.3s ease;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        background-size: 1.5rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        padding: 6rem 0;
+    }
+
+    .cta-shape-1 {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        top: -150px;
+        right: -150px;
+    }
+
+    .cta-shape-2 {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 50%;
+        bottom: -100px;
+        left: -100px;
+    }
+
+    /* Animations */
+    @@keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-15px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 992px) {
+        .hero-section {
+            text-align: center;
+        }
+
+        .dashboard-preview {
+            transform: none !important;
+            margin-top: 3rem;
+        }
+
+        .floating-card {
+            display: none;
+        }
+
+        .trust-badges {
+            justify-content: center;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .display-4 {
+            font-size: 2.5rem;
+        }
+
+        .lead {
+            font-size: 1.1rem;
+        }
+    }
 </style>
 
 @section Scripts {
     <!-- Add Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Initialize carousel -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var testimonialCarousel = new bootstrap.Carousel(document.getElementById('testimonialCarousel'), {
+                interval: 5000,
+                pause: 'hover'
+            });
+        });
+    </script>
 }

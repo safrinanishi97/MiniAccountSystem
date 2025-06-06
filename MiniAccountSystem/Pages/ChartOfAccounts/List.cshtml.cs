@@ -130,15 +130,13 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public IActionResult OnGetExportToExcel()
         {
-      
-            // Get data from database (using your existing LoadAccounts method)
             LoadAccounts();
 
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("ChartOfAccounts");
 
-                // Add headers with styling
+                // Add headers with darker styling
                 worksheet.Cells[1, 1].Value = "ID";
                 worksheet.Cells[1, 2].Value = "Account Name";
                 worksheet.Cells[1, 3].Value = "Parent Account";
@@ -149,31 +147,45 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
                 {
                     range.Style.Font.Bold = true;
                     range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    range.Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+                    range.Style.Fill.BackgroundColor.SetColor(Color.DarkSlateBlue); // Darker blue
                     range.Style.Font.Color.SetColor(Color.White);
+                    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Center aligned
+                    range.Style.Border.Top.Style = ExcelBorderStyle.Medium;
+                    range.Style.Border.Bottom.Style = ExcelBorderStyle.Medium;
+                    range.Style.Border.Left.Style = ExcelBorderStyle.Medium;
+                    range.Style.Border.Right.Style = ExcelBorderStyle.Medium;
+                    range.Style.Border.BorderAround(ExcelBorderStyle.Medium);
                 }
 
                 // Add data rows
                 int row = 2;
-                foreach (var account in FlatAccounts) // Using your existing FlatAccounts property
+                foreach (var account in FlatAccounts)
                 {
                     worksheet.Cells[row, 1].Value = account.Id;
                     worksheet.Cells[row, 2].Value = account.Name;
                     worksheet.Cells[row, 3].Value = account.ParentName ?? "N/A";
                     worksheet.Cells[row, 4].Value = GetAccountTypeBadge(account.Name);
+
+                    // Apply center alignment and borders to each data cell
+                    for (int col = 1; col <= 4; col++)
+                    {
+                        worksheet.Cells[row, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[row, col].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[row, col].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[row, col].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[row, col].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    }
+
                     row++;
                 }
 
-                // Auto-fit columns
+                // Auto-fit columns with some padding
                 worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
-                // Set some basic styling for the data
-                using (var range = worksheet.Cells[2, 1, row - 1, 4])
+                // Add outer border to the entire table
+                using (var range = worksheet.Cells[1, 1, row - 1, 4])
                 {
-                    range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                    range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                    range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                    range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    range.Style.Border.BorderAround(ExcelBorderStyle.Medium);
                 }
 
                 // Return the Excel file

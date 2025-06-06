@@ -4,12 +4,16 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- First result: Voucher master
+    -- First result: Voucher master with Created and Updated info
     SELECT 
         VoucherId,
         VoucherType,
         VoucherDate,
-        ReferenceNo
+        ReferenceNo,
+        CreatedBy,
+        CreatedDate,
+        UpdatedBy,       
+        UpdatedDate     
     FROM VoucherMaster
     WHERE VoucherId = @VoucherId;
 

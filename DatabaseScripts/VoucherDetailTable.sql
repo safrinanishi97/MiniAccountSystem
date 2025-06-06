@@ -1,4 +1,3 @@
-
 CREATE TABLE [dbo].[VoucherDetails] (
     [VoucherDetailId] INT             IDENTITY (1, 1) NOT NULL,
     [VoucherId]       INT             NOT NULL,

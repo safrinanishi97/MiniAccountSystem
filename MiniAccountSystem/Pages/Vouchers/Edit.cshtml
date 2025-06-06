@@ -5,86 +5,124 @@
     ViewData["Title"] = "Edit Voucher";
 }
 
-<div class="card shadow-sm">
-    <div class="card-header bg-primary text-white">
-        <h2 class="mb-0">Edit Voucher</h2>
+<div class="card border-0 shadow-lg" style="background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);">
+    <div class="card-header bg-dark-gradient text-white py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Edit Voucher</h2>
+            <div class="badge bg-warning-soft">Editing Mode</div>
+        </div>
     </div>
-    <div class="card-body">
+    <div class="card-body bg-light-gray">
         <form method="post">
-            <div class="row mb-4">
-                <input type="hidden" asp-for="Voucher.VoucherId" />
+            <input type="hidden" asp-for="Voucher.VoucherId" />
+
+            <div class="row mb-4 g-3">
                 <div class="col-md-4">
-
-                    <label class="form-label">Voucher Type</label>
-                    <select asp-for="Voucher.VoucherType" class="form-select">
-                        <option>Journal</option>
-                        <option>Payment</option>
-                        <option>Receipt</option>
-                    </select>
-                    @* <label>Voucher Type</label> *@
-
+                    <div class="form-floating">
+                        <select asp-for="Voucher.VoucherType" class="form-select bg-soft-dark border-dark">
+                            <option>Journal</option>
+                            <option>Payment</option>
+                            <option>Receipt</option>
+                        </select>
+                        <label class="text-dark mb-2">Voucher Type</label>
+                    </div>
                 </div>
                 <div class="col-md-4">
-
-                    <label class="form-label">Date</label>
-                    <input asp-for="Voucher.VoucherDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-
-
+                    <div class="form-floating">
+                        <input asp-for="Voucher.VoucherDate" type="date" class="form-control bg-soft-dark border-dark"
+                               value="@Model.Voucher.VoucherDate.ToString("yyyy-MM-dd")" />
+                        <label class="text-dark mb-2">Date</label>
+                    </div>
                 </div>
                 <div class="col-md-4">
-
-                    <label class="form-label">Reference No</label>
-                    <input asp-for="Voucher.ReferenceNo" class="form-control" />
-
+                    <div class="form-floating">
+                        <input asp-for="Voucher.ReferenceNo" class="form-control bg-soft-dark border-dark" />
+                        <label class="text-dark mb-2">Reference No</label>
+                    </div>
                 </div>
             </div>
-            <hr />
-            <h5 class="mb-3 border-bottom pb-2">Voucher Details</h5>
+
+            <div class="row mb-4 g-3">
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control bg-soft-dark border-dark" value="@Model.Voucher.CreatedBy" readonly />
+                        <label class="text-dark mb-2">Created By</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input asp-for="Voucher.CreatedDate" class="form-control bg-soft-dark border-dark" readonly />
+                        <label class="text-dark mb-2">Created At</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="h-100 d-flex align-items-end">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="auditMode">
+                            <label class="form-check-label text-dark" for="auditMode">Show Audit Trail</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header mb-4">
+                <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Voucher Details</h5>
+                <div class="section-divider"></div>
+            </div>
 
             <div id="voucherDetailsContainer">
                 @for (int i = 0; i < Model.Voucher.VoucherDetails.Count; i++)
                 {
-                    <div class="row mb-3 voucher-row align-items-center">
+                    <div class="row mb-3 voucher-row align-items-center g-2">
                         <div class="col-md-5">
-                            <select name="Voucher.VoucherDetails[@i].AccountId" class="form-select">
+                            <select name="Voucher.VoucherDetails[@i].AccountId" class="form-select bg-soft-dark border-dark">
                                 @foreach (var acc in Model.AccountList)
                                 {
                                     <option value="@acc.Value" selected="@(acc.Value == Model.Voucher.VoucherDetails[i].AccountId.ToString())">
                                         @acc.Text
                                     </option>
-
-                                    @* <option value="@acc.Value">@acc.Text</option> *@
                                 }
                             </select>
                         </div>
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span class="input-group-text">৳</span>
-                                <input name="Voucher.VoucherDetails[@i].DebitAmount" class="form-control" placeholder="Debit" value="@Model.Voucher.VoucherDetails[i].DebitAmount" /> 
+                                <span class="input-group-text bg-dark text-white border-dark">৳</span>
+                                <input name="Voucher.VoucherDetails[@i].DebitAmount"
+                                       class="form-control bg-soft-dark border-dark"
+                                       placeholder="Debit"
+                                       value="@Model.Voucher.VoucherDetails[i].DebitAmount" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span class="input-group-text">৳</span>
-                                <input name="Voucher.VoucherDetails[@i].CreditAmount" class="form-control" placeholder="Credit" value="@Model.Voucher.VoucherDetails[i].CreditAmount" /> 
+                                <span class="input-group-text bg-dark text-white border-dark">৳</span>
+                                <input name="Voucher.VoucherDetails[@i].CreditAmount"
+                                       class="form-control bg-soft-dark border-dark"
+                                       placeholder="Credit"
+                                       value="@Model.Voucher.VoucherDetails[i].CreditAmount" />
                             </div>
                         </div>
                         <div class="col-md-1 text-end">
-                            <button type="button" class="btn btn-sm btn-outline-danger remove-row">
-                                <i class="bi bi-trash">Remove</i>
+                            <button type="button" class="btn btn-sm btn-danger remove-row">
+                                <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </div>
                 }
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-outline-primary" id="addRow">
-                    <i class="bi bi-plus-circle"></i> Add Line
+            <div class="d-flex justify-content-between mt-4 pt-3 border-top border-secondary">
+                <button type="button" class="btn btn-primary-gradient" id="addRow">
+                    <i class="bi bi-plus-circle me-2"></i> Add Line
                 </button>
-                <button type="submit" class="btn btn-outline-primary px-4">
-                    <i class="bi bi-save"></i> Update Voucher
-                </button>
+                <div>
+                    <button type="reset" class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-arrow-counterclockwise me-2"></i>Reset Changes
+                    </button>
+                    <button type="submit" class="btn btn-success-gradient px-4">
+                        <i class="bi bi-save me-2"></i> Update Voucher
+                    </button>
+                </div>
             </div>
         </form>
     </div>
@@ -92,107 +130,76 @@
 
 @if (!string.IsNullOrEmpty(ViewData["Error"]?.ToString()))
 {
-    <div class="alert alert-danger mt-3">@ViewData["Error"]</div>
+    <div class="alert alert-danger mt-3 alert-dismissible fade show">
+        <i class="bi bi-exclamation-triangle me-2"></i> @ViewData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
 }
 
-@* @section Scripts { *@
-@*     <script> *@
-@*         let rowIndex = @Model.Voucher.VoucherDetails.Count; *@
-@*         const accountOptions = `@Html.Raw(string.Join("", Model.AccountList.Select(a => $"<option value='{a.Value}'>{a.Text}</option>")))`; *@
+@section Styles {
+    <style>
+        .bg-dark-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%) !important;
+        }
 
-@*         // function renderRow(index) { *@
-@*         //     return ` *@
-@*         //         <div class="row mb-3 voucher-row align-items-center"> *@
-@*         //             <div class="col-md-5"> *@
-@*         //                 <select name="Voucher.VoucherDetails[${index}].AccountId" class="form-select"> *@
-@*         //                     ${accountOptions} *@
-@*         //                 </select> *@
-@*         //             </div> *@
-@*         //             <div class="col-md-3"> *@
-@*         //                 <div class="input-group"> *@
-@*         //                     <span class="input-group-text">৳</span> *@
-@*         //                     <input name="Voucher.VoucherDetails[${index}].DebitAmount" class="form-control" placeholder="Debit" /> *@
-@*         //                 </div> *@
-@*         //             </div> *@
-@*         //             <div class="col-md-3"> *@
-@*         //                 <div class="input-group"> *@
-@*         //                     <span class="input-group-text">৳</span> *@
-@*         //                     <input name="Voucher.VoucherDetails[${index}].CreditAmount" class="form-control" placeholder="Credit" /> *@
-@*         //                 </div> *@
-@*         //             </div> *@
-@*         //             <div class="col-md-1 text-end"> *@
-@*         //                 <button type="button" class="btn btn-sm btn-outline-danger remove-row"> *@
-@*         //                     <i class="bi bi-trash">Remove</i> *@
-@*         //                 </button> *@
-@*         //             </div> *@
-@*         //         </div> *@
-@*         //     `; *@
-@*         // } *@
+        .bg-primary-gradient {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%) !important;
+            color: white;
+        }
 
+        .bg-success-gradient {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%) !important;
+            color: white;
+        }
 
-@*                 function renderRow(index) { *@
-@*             return ` *@
-@*                 <div class="row mb-3 voucher-row align-items-center"> *@
-@*                     <div class="col-md-5"> *@
-@*                         <select name="Voucher.VoucherDetails[${index}].AccountId" class="form-select"> *@
-@*                             ${accountOptions} *@
-@*                         </select> *@
-@*                     </div> *@
-@*                     <div class="col-md-3"> *@
-@*                         <div class="input-group"> *@
-@*                             <span class="input-group-text">৳</span> *@
-@*                             <input name="Voucher.VoucherDetails[${index}].DebitAmount" *@
-@*                                    class="form-control" *@
-@*                                    placeholder="Debit" *@
-@*                                    value="${Voucher.VoucherDetails[index]?.DebitAmount || ''}" /> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                     <div class="col-md-3"> *@
-@*                         <div class="input-group"> *@
-@*                             <span class="input-group-text">৳</span> *@
-@*                             <input name="Voucher.VoucherDetails[${index}].CreditAmount" *@
-@*                                    class="form-control" *@
-@*                                    placeholder="Credit" *@
-@*                                    value="${Voucher.VoucherDetails[index]?.CreditAmount || ''}" /> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                     <div class="col-md-1 text-end"> *@
-@*                         <button type="button" class="btn btn-sm btn-outline-danger remove-row"> *@
-@*                             <i class="bi bi-trash">Remove</i> *@
-@*                         </button> *@
-@*                     </div> *@
-@*                 </div> *@
-@*             `; *@
-@*         } *@
+        .bg-warning-soft {
+            background-color: rgba(241, 196, 15, 0.2);
+            color: #f39c12;
+        }
 
-@*         function reindexRows() { *@
-@*             let rows = document.querySelectorAll("#voucherDetailsContainer .voucher-row"); *@
-@*             rows.forEach((row, i) => { *@
-@*                 row.querySelectorAll("select, input").forEach(input => { *@
-@*                     if (input.name.includes("AccountId")) *@
-@*                         input.name = `Voucher.VoucherDetails[${i}].AccountId`; *@
-@*                     else if (input.name.includes("DebitAmount")) *@
-@*                         input.name = `Voucher.VoucherDetails[${i}].DebitAmount`; *@
-@*                     else if (input.name.includes("CreditAmount")) *@
-@*                         input.name = `Voucher.VoucherDetails[${i}].CreditAmount`; *@
-@*                 }); *@
-@*             }); *@
-@*             rowIndex = rows.length; *@
-@*         } *@
+        .bg-light-gray {
+            background-color: #f8f9fa;
+        }
 
-@*         $('#addRow').click(function () { *@
-@*             $('#voucherDetailsContainer').append(renderRow(rowIndex)); *@
-@*             rowIndex++; *@
-@*         }); *@
+        .bg-soft-dark {
+            background-color: #e9ecef;
+        }
 
+        .border-dark {
+            border-color: #dee2e6 !important;
+        }
 
-@*         $(document).on('click', '.remove-row', function () { *@
-@*             $(this).closest('.voucher-row').remove(); *@
-@*             reindexRows(); *@
-@*         }); *@
-@*     </script> *@
-@* } *@
+        .section-header {
+            position: relative;
+        }
 
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, rgba(44,62,80,0.1) 0%, rgba(44,62,80,0.5) 50%, rgba(44,62,80,0.1) 100%);
+            margin-top: 0.5rem;
+        }
+
+        .form-floating label {
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .btn-danger {
+            transition: all 0.3s ease;
+        }
+
+            .btn-danger:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+    </style>
+}
 
 @section Scripts {
     <script>
@@ -201,33 +208,33 @@
 
         function renderRow(index) {
             return `
-                <div class="row mb-3 voucher-row align-items-center">
+                <div class="row mb-3 voucher-row align-items-center g-2">
                     <div class="col-md-5">
-                        <select name="Voucher.VoucherDetails[${index}].AccountId" class="form-select">
+                        <select name="Voucher.VoucherDetails[${index}].AccountId" class="form-select bg-soft-dark border-dark">
                             ${accountOptions}
                         </select>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
-                            <span class="input-group-text">৳</span>
+                            <span class="input-group-text bg-dark text-white border-dark">৳</span>
                             <input name="Voucher.VoucherDetails[${index}].DebitAmount"
-                                   class="form-control"
+                                   class="form-control bg-soft-dark border-dark"
                                    placeholder="Debit"
                                    value="0.00" />
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
-                            <span class="input-group-text">৳</span>
+                            <span class="input-group-text bg-dark text-white border-dark">৳</span>
                             <input name="Voucher.VoucherDetails[${index}].CreditAmount"
-                                   class="form-control"
+                                   class="form-control bg-soft-dark border-dark"
                                    placeholder="Credit"
                                    value="0.00" />
                         </div>
                     </div>
                     <div class="col-md-1 text-end">
-                        <button type="button" class="btn btn-sm btn-outline-danger remove-row">
-                            <i class="bi bi-trash">Remove</i>
+                        <button type="button" class="btn btn-sm btn-danger remove-row">
+                            <i class="bi bi-trash"></i>
                         </button>
                     </div>
                 </div>
@@ -258,6 +265,14 @@
             $(document).on('click', '.remove-row', function () {
                 $(this).closest('.voucher-row').remove();
                 reindexRows();
+            });
+
+            // Toggle for audit trail (could be implemented with additional functionality)
+            $('#auditMode').change(function() {
+                if(this.checked) {
+                    // Add your audit trail display logic here
+                    console.log("Audit mode enabled");
+                }
             });
         });
     </script>

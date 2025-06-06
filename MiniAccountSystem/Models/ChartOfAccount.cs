@@ -6,6 +6,8 @@
         public string Name { get; set; }
         public int? ParentId { get; set; }
         public string? ParentName { get; set; }
+
         public List<ChartOfAccount> Children { get; set; } = new List<ChartOfAccount>();
     }
+
 }

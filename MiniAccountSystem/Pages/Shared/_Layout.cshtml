@@ -3,18 +3,259 @@
 @inject UserManager<IdentityUser> UserManager
 @inject SignInManager<IdentityUser> SignInManager
 
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MiniAccountSystem</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - Mini Account System | Professional Accounting Solutions</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MiniAccountSystem.styles.css" asp-append-version="true" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="~/favicon.png">
+
+
+
     @RenderSection("Styles", required: false)
+
+    <style>
+      
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --navbar-height: 70px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            padding-top: var(--navbar-height);
+            color: #4a4a4a;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            
+        }
+
+            /* Home page specific - will only apply to Index page */
+            body.home-page {
+                padding-top: 0;
+            }
+
+        .home-page main {
+            padding-top: var(--navbar-height);
+        }
+
+        /* Default main styling for other pages */
+        main {
+            min-height: calc(100vh - var(--navbar-height) - 60px);
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        /* Container padding for non-home pages */
+        body:not(.home-page) .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        /* Professional Navbar */
+        .navbar {
+            height: var(--navbar-height);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            background: #2c3e50 !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            padding: 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+            .navbar-brand span {
+                color: #2980b9;
+            }
+
+        .navbar-nav {
+            width: 100%;
+            font-size: 16px;
+        }
+
+  
+
+        .navbar-nav .nav-link {
+            font-weight: 400;
+            padding: 1.5rem 1rem !important;
+            color: rgba(255, 255, 255) !important;
+            position: relative;
+            transition: all 0.3s ease;
+            display: block;
+      
+        }
+
+            .navbar-nav .nav-link:hover
+           {
+                color: black !important;
+                background-color: lightgray;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transform: translateY(-2px);
+                border-radius:6px;
+                transition:0.5s;
+            }
+
+            .navbar-nav .nav-link.active {
+                color: white !important;
+                font-weight: 500;
+                border-bottom: 3px solid #fff;
+            }
+
+                .navbar-nav .nav-link.active:after {
+                    content: '';
+                    position: absolute;
+                    bottom: -1px;
+                    left: 1rem;
+                    right: 1rem;
+                    height: 2px;
+                    background: #3498db;
+                }
+
+        .login-partial-container .nav-link {
+            font-weight: 100;
+            padding: 1rem !important;
+            color: rgba(255, 255, 255) !important;
+            position: relative;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+            .login-partial-container .nav-link:hover {
+                color: black !important;
+                background-color: lightgray;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transform: translateY(-5px);
+                border-radius: 6px;
+                transition: 0.5s;
+            }
+
+            .login-partial-container .nav-link.active {
+                color: white !important;
+                font-weight: 200;
+                border-bottom: 3px solid #fff;
+            }
+
+                .login-partial-container .nav-link.active:after {
+                    content: '';
+                    position: absolute;
+                    bottom: -1px;
+                    left: 1rem;
+                    right: 1rem;
+                    height: 2px;
+                    background: #3498db;
+                }
+
+        .login-partial-container .btn-login,
+        .login-partial-container .btn-register {
+            border: none;
+            background: transparent;
+            color: white !important;
+            font-weight: 500;
+            padding: 1.5rem !important;
+            position: relative;
+            transition: all 0.3s ease;
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+
+            .login-partial-container .btn-login:hover,
+            .login-partial-container .btn-register:hover {
+                color: #2c3e50 !important; 
+                background-color: white !important; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transform: translateY(-2px);
+                border-radius: 6px;
+                transition: 1s;
+            }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+        }
+
+            .navbar-toggler:focus {
+                box-shadow: none;
+            }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            margin-top: auto; 
+            position: relative;
+            height: auto;
+        }
+
+        .container.py-4 {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        @@media (max-width: 991.98px) {
+            .navbar-collapse {
+                padding: 1rem 0;
+                background: #2c3e50;
+                margin-top: 0.5rem;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+            }
+
+            .nav-item {
+                text-align: left;
+                border-bottom: 1px solid #eee;
+            }
+                .nav-link.active:after {
+                    display: none;
+                }
+
+            .login-partial-container .nav-link,
+            .login-partial-container .btn-login,
+            .login-partial-container .btn-register {
+                padding: 1rem 1.5rem !important;
+                text-align: left;
+            }
+
+                .login-partial-container .nav-link.active:after {
+                    display: none;
+                }
+
+        }
+    </style>
+
 </head>
 
 @{
@@ -31,60 +272,104 @@
     }
 }
 
-
-<body>
+<body class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Index" ? "home-page" : "")">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MiniAccountSystem</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand float-start" asp-area="" asp-page="/Index">
+                    <i class="bi bi-calculator-fill me-2" style="color: var(--secondary-color);"></i>
+                    Mini<span>Account</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Index" ? "active" : "")" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Admin/AssignModuleAccess" ? "active" : "")"
+                               asp-area="" asp-page="/Admin/AssignModuleAccess">Assign Module</a>
+                        </li>
+
                         @if (PermissionService.HasAccess(role, "ChartOfAccounts"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/ChartOfAccounts/Index">Chart Of Accounts</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/ChartOfAccounts/Index" ? "active" : "")" asp-area="" asp-page="/ChartOfAccounts/Index">Chart of Accounts</a>
                             </li>
                         }
 
                         @if (PermissionService.HasAccess(role, "VoucherEntry"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Vouchers/Create">Voucher Entry</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Vouchers/Index" ? "active" : "")" asp-area="" asp-page="/Vouchers/Index">Voucher Entry</a>
                             </li>
                         }
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Privacy" ? "active" : "")" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
+
+                    <div class="login-partial-container d-flex align-items-center float-end">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-           &copy; @DateTime.Now.Year - Safrina Akter - All Rights Reserved
+        <main role="main">
+        @if (ViewData["NoContainerPadding"] as bool? == true)
+        {
+            @RenderBody()
+        }
+        else
+        {
+            <div class="container">
+                @RenderBody()
+            </div>
+        }
+    </main>
+
+    <footer class="border-top footer text-white">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    &copy; @DateTime.Now.Year - Mini Account System - All Rights Reserved
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="/Privacy" class="text-white text-decoration-none me-3">Privacy Policy</a>
+                    <a href="/Terms" class="text-white text-decoration-none me-3">Terms of Service</a>
+                    <a href="/Contact" class="text-white text-decoration-none">Contact Us</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Custom JS -->
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        // Add active class to current page link
+        $(document).ready(function() {
+            var currentPage = '@ViewContext.RouteData.Values["Page"]';
+            $('.nav-link').each(function() {
+                var linkPage = $(this).attr('href').replace('/', '');
+                if (currentPage === linkPage) {
+                    $(this).addClass('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

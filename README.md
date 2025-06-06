@@ -15,20 +15,19 @@ A simple account management system built with ASP.NET Core Razor Pages, designed
 - [Screenshots](#screenshots)
 - [Future Enhancements](#future-enhancements)
 
-
 ## Features
 
 - **User Authentication & Authorization**: Secure user registration and login powered by ASP.NET Identity.
 - **Role-Based Access Control**: Differentiated access levels for Admin, Accountant, and Viewer roles.
 - **Custom Role Management**: Admins can assign specific roles and module access rights to users.
 - **Chart of Accounts Management**:
-    - Comprehensive CRUD operations (Create, Read, Update, Delete) for accounts (e.g., Cash, Bank, Receivables).
-    - Supports hierarchical (Parent/Child) display for better account organization.
+  - Comprehensive CRUD operations (Create, Read, Update, Delete) for accounts (e.g., Cash, Bank, Receivables).
+  - Supports hierarchical (Parent/Child) display for better account organization.
 - **Voucher Entry Module**:
-    - Support for various voucher types: Journal Vouchers, Payment Vouchers, and Receipt Vouchers.
-    - Dynamic multi-line entries for Debit and Credit amounts.
-    - Account selection via dropdowns.
-    - Automatic validation to ensure total debits equal total credits.
+  - Support for various voucher types: Journal Vouchers, Payment Vouchers, and Receipt Vouchers.
+  - Dynamic multi-line entries for Debit and Credit amounts.
+  - Account selection via dropdowns.
+  - Automatic validation to ensure total debits equal total credits.
 - **Stored Procedure-Driven Database Access**: All database interactions are exclusively handled via SQL Server Stored Procedures, ensuring data integrity and performance.
 
 ## Tech Stack
@@ -45,21 +44,24 @@ A simple account management system built with ASP.NET Core Razor Pages, designed
 Based on the project requirements, the following core features have been implemented:
 
 ### 1. User Roles & Permissions
+
 - Implemented ASP.NET Identity with custom roles: `Admin`, `Accountant`, `Viewer`.
 - **Module Access Assignment**: Admins can assign specific access rights to various modules for different users through a dedicated interface, driven by stored procedures.
 
 ### 2. Chart of Accounts
+
 - **CRUD Operations**: Complete functionality to Create, Update, and Delete accounts.
 - **Stored Procedure**: Utilizes `sp_ManageChartOfAccounts` for all account management operations.
 - **Hierarchical Display**: Accounts are displayed in a tree-like (Parent/Child) structure, enhancing readability and navigation.
 
 ### 3. Voucher Entry Module
+
 - **Voucher Types**: Supports `Journal`, `Payment`, and `Receipt` vouchers.
 - **Form Design**:
-    - **Date**: Input field for the voucher date.
-    - **Reference No.**: Field for unique reference numbers.
-    - **Debit & Credit Entries**: Dynamic multi-line table for adding multiple debit and credit entries.
-    - **Account Selection**: Dropdown list populated with accounts from the Chart of Accounts.
+  - **Date**: Input field for the voucher date.
+  - **Reference No.**: Field for unique reference numbers.
+  - **Debit & Credit Entries**: Dynamic multi-line table for adding multiple debit and credit entries.
+  - **Account Selection**: Dropdown list populated with accounts from the Chart of Accounts.
 - **Validation**: Client-side (JavaScript) and server-side validation ensure that an entry cannot have both debit and credit amounts, and total debits must always equal total credits.
 - **Stored Procedure**: `sp_SaveVoucher` handles the complete process of saving a voucher and its associated entries to the database.
 
@@ -90,8 +92,8 @@ Before you begin, ensure you have the following installed:
     dotnet ef database update
     ```
 4.  **Create Stored Procedures**: Execute the SQL scripts for your stored procedures (`sp_ManageChartOfAccounts`, `sp_SaveVoucher`, and any other necessary SPs for user/role management, module access, etc.) on your `MiniAccountSystemDB` database. Navigate to the `DatabaseScripts` folder in the cloned repository. Execute all `.sql` script files found in this folder against your `MiniAccountSystemDB` database using SQL Server Management Studio (SSMS) or a similar tool.
- **Ensure you run them in the correct order if there are dependencies (e.g., User-Defined Table Types must be created before Stored Procedures that utilize them).**
-    *(For example, run `VoucherEntries_Table.sql` before `sp_SaveVoucher.sql`.)*
+    **Ensure you run them in the correct order if there are dependencies (e.g., User-Defined Table Types must be created before Stored Procedures that utilize them).**
+    _(For example, run `VoucherEntries_Table.sql` before `sp_SaveVoucher.sql`.)_
 
 ### Running the Application
 
@@ -112,76 +114,105 @@ Before you begin, ensure you have the following installed:
       ```
 4.  The application will typically launch on `https://localhost:7154` (or another assigned port). Check the console output for the exact URL.
 
-
 ## Default Users for Testing
 
 For easy testing of different roles and permissions, the application is pre-seeded with the following default users:
 
-| Role        | Username             | Password      | Accessible Modules (via `sp_AssignUserAccess`) |
-| :---------- | :------------------- | :------------ | :--------------------------------------------- |
-| **Admin** | `safrina@gmail.com`  | `Safrina@123` | ChartOfAccounts, VoucherEntry, User/Role Management |
-| **Accountant** | `accountant1@gmail.com` | `Account@123` | VoucherEntry                                   |
-| **Viewer** | `viewer1@gmail.com`  | `Viewer@123`  | ChartOfAccounts                                |
-
-
+| Role           | Username                | Password      | Accessible Modules (via `sp_AssignUserAccess`)      |
+| :------------- | :---------------------- | :------------ | :-------------------------------------------------- |
+| **Admin**      | `safrina@gmail.com`     | `Safrina@123` | ChartOfAccounts, VoucherEntry, User/Role Management |
+| **Accountant** | `accountant1@gmail.com` | `Account@123` | VoucherEntry                                        |
+| **Viewer**     | `viewer1@gmail.com`     | `Viewer@123`  | ChartOfAccounts                                     |
 
 ## 📸 Screenshots
 
-### 🏠 Home Page  
-<img src="screenshots/Home.png" alt="Home Page"  width="100%" height="600"  />
+### 🏠 Home Page
 
-### 🏠 Admin-Home Page  
-<img src="screenshots/Home2.png" alt="Admin-Home Page"  width="100%" height="600" />
+<img src="screenshots/HomePage.png" alt="Home Page"  width="100%" height="600"  />
 
-### 🧾 ChartOfAccounts Index  
+### 🏠 Admin-Home Page
+
+<img src="screenshots/HomePageAdmin.png" alt="Admin-Home Page"  width="100%" height="600" />
+
+### 🧾 ChartOfAccounts Index
+
 <img src="screenshots/ChartOfAccounts_Index.png" alt="ChartOfAccounts Index" width="100%" height="600" />
 
-### 🧾 ChartOfAccounts Table View  
-<img src="screenshots/ChartOfAcTable.png" alt="Table view"  width="100%" height="600" />
+### 🧾 ChartOfAccounts Table View
 
-### 🧾 ChartOfAccounts Tree View  
-<img src="screenshots/ChartOfACTree.png" alt="Tree view"  width="100%" height="600" />
+<img src="screenshots/ChartOfAccounts_ListTable.png" alt="Table view"  width="100%" height="600" />
 
-### 🧾 ChartOfAccounts Execl View  
-<img src="screenshots/ChartOfACExcelView.png" alt="Execl view"  width="100%" height="600" />
+### 🧾 ChartOfAccounts Tree View
 
-### 🧾 ChartOfAccounts Create Form  
-<img src="screenshots/ChartofAccountCreate.png" alt="ChartOfAccounts Create Form" width="100%" height="600"  />
+<img src="screenshots/ChartOfAccounts_ListTree.png" alt="Tree view"  width="100%" height="600" />
 
-### 🧾 ChartOfAccounts Edit form  
-<img src="screenshots/ChartOfAcEdit.png" alt="ChartOfAccounts Edit Form" width="100%" height="600"  />
+### 🧾 ChartOfAccounts Execl View
 
-### 🧾 Voucher List  
-<img src="screenshots/VoucherList.png" alt="Voucher List" width="100%" height="600" />
+<img src="screenshots/ChartOfACExcel.png" alt="Execl view"  width="100%" height="600" />
 
-### 🧾 Voucher Entry Form  
-<img src="screenshots/VoucherCreate.png" alt="Voucher Entry" width="100%" height="600" />
+### 🧾 ChartOfAccounts Create Form
 
+<img src="screenshots/ChartOfAccounts_Create.png" alt="ChartOfAccounts Create Form" width="100%" height="600"  />
+
+### 🧾 ChartOfAccounts Edit form
+
+<img src="screenshots/ChartOfAccounts_Edit.png" alt="ChartOfAccounts Edit Form" width="100%" height="600"  />
+
+### 🧾 Voucher Index
+
+<img src="screenshots/VouchersIndex.png" alt="Voucher Index" width="100%" height="600" />
+
+### 🧾 Voucher List
+
+<img src="screenshots/Vouchers_List.png" alt="Voucher List" width="100%" height="600" />
+
+### 🧾 Voucher Entry Form
+
+<img src="screenshots/Vouchers_Create.png" alt="Voucher Entry" width="100%" height="600" />
 
 ### 🧾 Voucher Edit Form
-<img src="screenshots/VoucherEdit.png" alt="Voucher Edit Form" width="100%" height="600" />
 
-### 🧾 Voucher Excel Sheet  
-<img src="screenshots/VoucherExcelView.png" alt="Voucher Excel Sheet" width="100%" height="600" />
+<img src="screenshots/Vouchers_Edit.png" alt="Voucher Edit Form" width="100%" height="600" />
 
-### 🧾 AssignModuleAccess Page  
-<img src="screenshots/Admin_AssignModuleAccess.png" alt="AssignModuleAccess Page" width="100%" height="600" />
+### 🧾 Voucher Summery Excel Sheet
 
-### 🚫 AccessDenied Page  
+<img src="screenshots/VoucherExcel.png" alt="Voucher Excel Sheet" width="100%" height="600" />
+
+### 🧾 Voucher Detail Excel Sheet
+
+<img src="screenshots/VoucherDetailExcel.png" alt="Voucher Excel Sheet" width="100%" height="600" />
+
+### 🧾 AssignModuleAccess Page
+
+<img src="screenshots/AssignModule.png" alt="AssignModuleAccess Page" width="100%" height="600" />
+
+### 🧾 AssignModuleAccess As Accountant
+
+<img src="screenshots/ModuleAccessAsAccountant.png" alt="ModuleAccessAsAccountant" width="100%" height="600" />
+
+### 🚫 AccessDenied Page
+
 <img src="screenshots/AccessDenied.png" alt="AccessDenied Page" width="100%" height="600"  />
 
-### 🔐 Login Page  
+### 🔐 Login Page
+
 <img src="screenshots/Identity_Account_Login.png" alt="Login Page" width="100%" height="600" />
 
-### 🔐 Register Page  
+### 🔐 Account Manage Page
+
+<img src="screenshots/Identity_Account_Manage.png" alt="Account Manage Page" width="100%" height="600" />
+
+### 🔐 Register Page
+
 <img src="screenshots/Identity_Account_Register.png" alt="Register Page" width="100%" height="600" />
 
+### 🔐 Logout Page
 
+<img src="screenshots/Identity_Account_Logout.png" alt="Logout Page" width="100%" height="600" />
 
 ## Future Enhancements
+
 - Implementing comprehensive reporting modules, such as **Trial Balance, General Ledger, Cash Book, Bank Book, and customizable financial statements.**
 - Building a dedicated UI for managing users and roles by an Admin, without direct database interaction.
 - Enhanced client-side validation and user experience with more immediate feedback.
 - Integration with logging frameworks for better error diagnostics and monitoring.
-
-

@@ -4,31 +4,179 @@
     ViewData["Title"] = "Chart of Accounts";
 }
 
-<div class="dashboard">
-    <div class="card">
-        <h3>Total Accounts</h3>
-        <p class="display-4">@Model.TotalAccounts</p>
-        <a href="/ChartOfAccounts/List" class="btn btn-primary">View All Accounts</a>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1 class="display-4">Chart of Accounts</h1>
+        <p class="lead">Manage your financial accounts efficiently</p>
     </div>
-    <div class="card">
-        <h3>Quick Actions</h3>
-        <a href="/ChartOfAccounts/Create" class="btn btn-success mb-2">Create New Account</a>
-        <a href="/ChartOfAccounts/List" class="btn btn-info">Manage Accounts</a>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card card-total">
+            <div class="card-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="card-content">
+                <h3>Total Accounts</h3>
+                <p class="card-value">@Model.TotalAccounts</p>
+                <a href="/ChartOfAccounts/List" class="btn btn-outline-light">View All Accounts</a>
+            </div>
+        </div>
+
+        <div class="dashboard-card card-actions">
+            <div class="card-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="card-content">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <a href="/ChartOfAccounts/Create" class="btn btn-outline-primary">
+                        <i class="fas fa-plus"></i> Create New Account
+                    </a>
+                    <a href="/ChartOfAccounts/List" class="btn btn-outline-success">
+                        <i class="fas fa-cog"></i> Manage Accounts
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
-    .dashboard {
-        display: flex;
-        gap: 20px;
-        margin-top: 20px;
+    :root {
+       
+        --success-color: #1cc88a;
+        --secondary-color: #2e3a59;
+        --my-color: rgba(0, 0, 0, 0.1);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        --transition: all 0.3s ease;
     }
 
-    .card {
-        border: 1px solid #ddd;
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .dashboard-header {
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+        .dashboard-header h1 {
+            color: #2e3a59;
+            font-weight: 600;
+        }
+
+        .dashboard-header .lead {
+            color: #6c757d;
+            font-size: 1.25rem;
+        }
+
+    .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .dashboard-card {
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+    .card-total {
+        background: linear-gradient(135deg, var(--secondary-color), rgba(0, 0, 0, 0.3));
+        color: white;
+    }
+
+    .card-actions {
+        background: linear-gradient(135deg,var(--my-color), rgba(0, 0, 100, 0.3));
+        border: 0.3px solid rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+        margin-right: 1.5rem;
+        opacity: 0.2;
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+    }
+
+    .card-content h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-total .card-content h3 {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .card-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 1rem 0;
+    }
+
+    .card-total .card-value {
+        color: white;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn {
         border-radius: 8px;
-        padding: 20px;
-        flex: 1;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: var(--transition);
+    }
+
+   
+        .btn-success:hover {
+            background-color: #17a673;
+        border-color: #2e3a59;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a5ec0;
+        border-color: #2e3a59;
+        }
+
+    .btn-outline-light {
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+    @@media (max-width: 768px) {
+        .dashboard-cards {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />

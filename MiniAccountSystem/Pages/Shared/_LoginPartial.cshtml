@@ -2,25 +2,37 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
-</ul>
+<div class="login-partial-container d-flex align-items-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Account/Manage/Index" ? "active" : "")" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <i class="bi bi-person-circle me-1"></i>
+                <span class="d-none d-md-inline">Hello </span>@User.Identity?.Name
+            </a>
+        </div>
+        <div class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link" style="border:none;">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-md-inline">Logout</span>
+                </button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Account/Register" ? "active" : "")" asp-area="Identity" asp-page="/Account/Register">
+                <i class="bi bi-person-plus me-1"></i>
+                <span class="d-none d-md-inline">Register</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Account/Login" ? "active" : "")" asp-area="Identity" asp-page="/Account/Login">
+                <i class="bi bi-box-arrow-in-right me-1"></i>
+                <span class="d-none d-md-inline">Login</span>
+            </a>
+        </div>
+    }
+</div>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization; // Add this using directive
 
 namespace MiniAccountSystem.Pages.Admin
 {
-    // Apply the Authorize attribute here, specifying the "Admin" role
+
     [Authorize(Roles = "Admin")]
     public class AssignModuleAccessModel : PageModel
     {
@@ -64,7 +64,7 @@ namespace MiniAccountSystem.Pages.Admin
             con.Close();
 
             Message = "Module access assigned successfully.";
-            OnGet(); // Reload dropdowns
+            OnGet(); 
             return Page();
         }
     }

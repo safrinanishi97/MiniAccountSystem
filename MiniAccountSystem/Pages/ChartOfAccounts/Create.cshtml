@@ -1,51 +1,53 @@
-﻿
-
-@page
+﻿@page
 @model MiniAccountSystem.Pages.ChartOfAccounts.CreateModel
 @{
     ViewData["Title"] = "Create New Account";
 }
 
 <div class="container mt-4">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">
-                <i class="bi bi-journal-bookmark"></i> Create New Account
-            </h3>
+    <div class="card border-0 shadow-lg" style="background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);">
+        <div class="card-header bg-dark-gradient text-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="bi bi-journal-bookmark me-2"></i> Create New Account
+                </h3>
+                <div class="badge bg-primary-soft">New Account</div>
+            </div>
         </div>
-        <div class="card-body">
+        <div class="card-body bg-light-gray">
             <form method="post" class="needs-validation" novalidate>
-                <div class="row">
+                <div class="row g-4">
                     <div class="col-md-8">
-                        <div class="mb-3">
-                            <label asp-for="Account.Name" class="form-label fw-bold">
-                                <i class="bi bi-tag"></i> Account Name
+                        <div class="form-floating">
+                            <input asp-for="Account.Name" class="form-control bg-soft-dark border-dark"
+                                   id="accountName" placeholder="Enter account name" />
+                            <label for="accountName" class="text-dark mb-2">
+                                <i class="bi bi-tag me-2"></i>Account Name
                             </label>
-                            <input asp-for="Account.Name" class="form-control form-control-lg" placeholder="Enter account name" />
-                            <span asp-validation-for="Account.Name" class="text-danger small"></span>
+                            <span asp-validation-for="Account.Name" class="text-danger small mt-1 d-block"></span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
-                        <div class="mb-3">
-                            <label asp-for="Account.ParentId" class="form-label fw-bold">
-                                <i class="bi bi-diagram-2"></i> Parent Account
-                            </label>
-                            <select asp-for="Account.ParentId" class="form-select form-select-lg"
-                                    asp-items="@(new SelectList(Model.ParentAccounts, "Id", "Name"))">
+                        <div class="form-floating">
+                            <select asp-for="Account.ParentId" class="form-select bg-soft-dark border-dark"
+                                    id="parentAccount" asp-items="@(new SelectList(Model.ParentAccounts, "Id", "Name"))">
                                 <option value="">-- Select Parent --</option>
                             </select>
-                            <span asp-validation-for="Account.ParentId" class="text-danger small"></span>
+                            <label for="parentAccount" class="text-dark mb-2">
+                                <i class="bi bi-diagram-2 me-2"></i>Parent Account
+                            </label>
+                            <span asp-validation-for="Account.ParentId" class="text-danger small mt-1 d-block"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                <div class="d-flex justify-content-between mt-4 pt-3 border-top border-secondary">
                     <a asp-page="List" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left"></i> Back to List
+                        <i class="bi bi-arrow-left me-2"></i> Back to List
                     </a>
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="bi bi-save"></i> Create Account
+                    <button type="submit" class="btn btn-success-gradient px-4">
+                        <i class="bi bi-save me-2"></i> Create Account
                     </button>
                 </div>
             </form>
@@ -55,25 +57,82 @@
 
 @section Styles {
     <style>
+
+        .bg-dark-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%) !important;
+        }
+
+        .bg-success-gradient {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%) !important;
+            color: white;
+        }
+
+        .bg-primary-soft {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        .bg-light-gray {
+            background-color: #f8f9fa;
+        }
+
+        .bg-soft-dark {
+            background-color: #e9ecef;
+        }
+
+        .border-dark {
+            border-color: #dee2e6 !important;
+        }
+
         .card {
-            border-radius: 0.5rem;
-            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-floating label {
+            color: #495057;
+            font-weight: 500;
         }
 
         .form-control, .form-select {
-            border-radius: 0.25rem;
-            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
         }
 
             .form-control:focus, .form-select:focus {
-                box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-                border-color: #86b7fe;
+                box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
+                border-color: #3498db;
             }
 
         .btn {
-            border-radius: 0.25rem;
-            padding: 0.375rem 1.5rem;
+            border-radius: 6px;
+            padding: 10px 24px;
             font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary {
+            border-color: #6c757d;
+            color: #6c757d;
+        }
+
+            .btn-outline-secondary:hover {
+                background-color: #6c757d;
+                color: white;
+            }
+
+        .btn-success-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 20px;
         }
     </style>
 }
@@ -81,7 +140,7 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        // Enhance form validation
+        // Enhanced form validation with custom styling
         (function () {
             'use strict'
             const forms = document.querySelectorAll('.needs-validation')
@@ -91,10 +150,27 @@
                     if (!form.checkValidity()) {
                         event.preventDefault()
                         event.stopPropagation()
+
+                        // Add custom invalid styling
+                        form.querySelectorAll(':invalid').forEach(element => {
+                            element.style.borderColor = '#dc3545';
+                            element.nextElementSibling.style.color = '#dc3545';
+                        });
                     }
                     form.classList.add('was-validated')
                 }, false)
             })
+
+            // Real-time validation
+            document.querySelectorAll('.form-control, .form-select').forEach(element => {
+                element.addEventListener('input', function() {
+                    if (this.checkValidity()) {
+                        this.style.borderColor = '#28a745';
+                    } else {
+                        this.style.borderColor = '';
+                    }
+                });
+            });
         })()
     </script>
 }

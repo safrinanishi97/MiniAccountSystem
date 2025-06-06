@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Identity;
 using MiniAccountSystem.Models;
 using System.Data;
 
@@ -15,48 +16,15 @@ namespace MiniAccountSystem.Pages.Vouchers
         public List<SelectListItem> AccountList { get; set; } = new();
 
         private readonly IConfiguration _config;
-        public EditModel(IConfiguration config)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public EditModel(IConfiguration config, UserManager<IdentityUser> userManager)
         {
             _config = config;
+            _userManager = userManager;
         }
 
-        //public void OnGet(int id)
-        //{
-        //    LoadAccounts();
-
-        //    using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-        //    using var cmd = new SqlCommand("sp_GetVoucherById", conn)
-        //    {
-        //        CommandType = CommandType.StoredProcedure
-        //    };
-        //    cmd.Parameters.AddWithValue("@VoucherId", id);
-        //    conn.Open();
-        //    using var reader = cmd.ExecuteReader();
-        //    if (reader.Read())
-        //    {
-        //        Voucher.VoucherId = id;
-        //        Voucher.VoucherType = reader["VoucherType"]?.ToString() ?? "";
-        //        Voucher.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
-        //        Voucher.ReferenceNo = reader["ReferenceNo"]?.ToString() ?? "";
-        //    }
-
-        //    // Next Result: Voucher Details
-        //    if (reader.NextResult())
-        //    {
-        //        while (reader.Read())
-        //        {
-        //            Voucher.VoucherDetails.Add(new VoucherDetailDto
-        //            {
-        //                AccountId = Convert.ToInt32(reader["AccountId"]),
-        //                DebitAmount = Convert.ToDecimal(reader["DebitAmount"]),
-        //                CreditAmount = Convert.ToDecimal(reader["CreditAmount"])
-        //            });
-        //        }
-        //    }
-        //}
-
-
-        public void OnGet(int id)
+        public async Task OnGetAsync(int id)
         {
             LoadAccounts();
 
@@ -75,9 +43,17 @@ namespace MiniAccountSystem.Pages.Vouchers
                 Voucher.VoucherType = reader["VoucherType"]?.ToString() ?? "";
                 Voucher.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
                 Voucher.ReferenceNo = reader["ReferenceNo"]?.ToString() ?? "";
+                Voucher.CreatedBy = reader["CreatedBy"]?.ToString() ?? "";
+                Voucher.CreatedDate = reader["CreatedDate"] != DBNull.Value
+                    ? Convert.ToDateTime(reader["CreatedDate"])
+                    : DateTime.Now;
+                Voucher.UpdatedBy = reader["UpdatedBy"]?.ToString(); 
+                Voucher.UpdatedDate = reader["UpdatedDate"] != DBNull.Value
+                    ? Convert.ToDateTime(reader["UpdatedDate"])
+                    : (DateTime?)null;
             }
 
-            // Next Result: Voucher Details
+            // Load details
             if (reader.NextResult())
             {
                 while (reader.Read())
@@ -90,9 +66,13 @@ namespace MiniAccountSystem.Pages.Vouchers
                     });
                 }
             }
+
+            var user = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(user);
+            ViewData["UserWithRole"] = $"{User.Identity?.Name} ({roles.FirstOrDefault()})";
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             LoadAccounts();
 
@@ -107,6 +87,12 @@ namespace MiniAccountSystem.Pages.Vouchers
 
             try
             {
+                var user = await _userManager.GetUserAsync(User);
+                var roles = await _userManager.GetRolesAsync(user);
+                var primaryRole = roles.FirstOrDefault() ?? "User";
+
+                var createdBy = $"{User.Identity?.Name ?? "System"} ({primaryRole})";
+                var updatedBy = $"{User.Identity?.Name ?? "System"} ({primaryRole})";
                 using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
                 using var cmd = new SqlCommand("sp_SaveVoucher", conn)
                 {
@@ -118,9 +104,9 @@ namespace MiniAccountSystem.Pages.Vouchers
                 cmd.Parameters.AddWithValue("@VoucherType", Voucher.VoucherType);
                 cmd.Parameters.AddWithValue("@VoucherDate", Voucher.VoucherDate);
                 cmd.Parameters.AddWithValue("@ReferenceNo", Voucher.ReferenceNo);
-                cmd.Parameters.AddWithValue("@CreatedBy", User.Identity?.Name ?? "Admin");
+                cmd.Parameters.AddWithValue("@UpdatedBy", updatedBy);
+       
 
-                // Table-valued parameter
                 var dt = new DataTable();
                 dt.Columns.Add("AccountId", typeof(int));
                 dt.Columns.Add("DebitAmount", typeof(decimal));
@@ -137,7 +123,7 @@ namespace MiniAccountSystem.Pages.Vouchers
                 cmd.ExecuteNonQuery();
                 conn.Close();
 
-                return RedirectToPage("Index");
+                return RedirectToPage("List");
             }
             catch (Exception ex)
             {
@@ -148,13 +134,33 @@ namespace MiniAccountSystem.Pages.Vouchers
 
         private void LoadAccounts()
         {
-            AccountList = new List<SelectListItem>
-        {
-            new("Cash", "1"),
-            new("Bank", "2"),
-            new("Receivable", "3")
-        };
+            string connectionString = _config.GetConnectionString("DefaultConnection")
+                ?? throw new ArgumentNullException("Connection string is missing!");
+
+            try
+            {
+                using var con = new SqlConnection(connectionString);
+                var cmd = new SqlCommand("SELECT Id, Name FROM ChartOfAccounts ORDER BY Name", con);
+                con.Open();
+                var reader = cmd.ExecuteReader();
+
+                AccountList = new List<SelectListItem>
+                {
+                    new("-- Select Account --", "")
+                };
+                while (reader.Read())
+                {
+                    AccountList.Add(new SelectListItem
+                    {
+                        Text = reader["Name"].ToString(),
+                        Value = reader["Id"].ToString()
+                    });
+                }
+            }
+            catch
+            {
+                AccountList = new List<SelectListItem>();
+            }
         }
     }
-
 }
