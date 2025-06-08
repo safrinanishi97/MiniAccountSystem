@@ -29,9 +29,12 @@
             <div class="card-content">
                 <h3>Quick Actions</h3>
                 <div class="action-buttons">
-                    <a href="/ChartOfAccounts/Create" class="btn btn-outline-primary">
-                        <i class="fas fa-plus"></i> Create New Account
-                    </a>
+                    @if (!User.IsInRole("Viewer") && !User.IsInRole("Accountant"))
+                    {
+                        <a href="/ChartOfAccounts/Create" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> Create New Account
+                        </a>
+                    }
                     <a href="/ChartOfAccounts/List" class="btn btn-outline-success">
                         <i class="fas fa-cog"></i> Manage Accounts
                     </a>

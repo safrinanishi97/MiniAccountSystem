@@ -27,10 +27,14 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
             BuildAccountTree();
         }
 
-        //}
-
         public IActionResult OnPostDelete(int id)
         {
+            if (User.IsInRole("Viewer") || User.IsInRole("Accountant"))
+            {
+                TempData["ErrorMessage"] = "Your role does not allow this action";
+                return RedirectToPage("List");
+            }
+
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException("Connection string is missing!");
 

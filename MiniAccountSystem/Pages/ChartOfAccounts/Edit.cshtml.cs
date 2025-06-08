@@ -23,12 +23,16 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public IActionResult OnGet(int id)
         {
+            if (User.IsInRole("Viewer") || User.IsInRole("Accountant"))
+            {
+                return RedirectToPage("/AccessDenied");
+            }
+
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException("Connection string 'DefaultConnection' not found.");
 
             try
             {
-                // Load current account
                 using (var conn = new SqlConnection(connectionString))
                 {
                     var cmd = new SqlCommand("SELECT Id, Name, ParentId FROM ChartOfAccounts WHERE Id = @Id", conn);
@@ -53,7 +57,6 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
                     }
                 }
 
-                // Load parent accounts (excluding current account and its children)
                 using (var conn = new SqlConnection(connectionString))
                 {
                     var cmd = new SqlCommand(
@@ -88,6 +91,11 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public IActionResult OnPost()
         {
+            if (User.IsInRole("Viewer") || User.IsInRole("Accountant"))
+            {
+                return RedirectToPage("/AccessDenied");
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();

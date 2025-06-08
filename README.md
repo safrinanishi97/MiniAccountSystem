@@ -190,6 +190,25 @@ For easy testing of different roles and permissions, the application is pre-seed
 
 <img src="screenshots/ModuleAccessAsAccountant.png" alt="ModuleAccessAsAccountant" width="100%" height="600" />
 
+### 🧾 ChartOfAccount TableView Page (As Accountant)
+
+<img src="screenshots/ChartOfAccounts_AccountantsTable.png" alt="AccountantTableview" width="100%" height="600" />
+
+
+### 🧾 ChartOfAccount TreeView Page (As Accountant)
+
+<img src="screenshots/ChartOfAccounts_AccountantsTree.png" alt="AccountantTreeview" width="100%" height="600" />
+
+
+### 🧾 ChartOfAccount TableView Page (As Viewer)
+
+<img src="screenshots/ChartOfAccounts_ViewerTable.png" alt="ViewerTableview" width="100%" height="600" />
+
+
+### 🧾 ChartOfAccount TreeView Page (As Viewer)
+
+<img src="screenshots/ChartOfAccounts_ViewerTree.png" alt="ViewerTreeview" width="100%" height="600" />
+
 ### 🚫 AccessDenied Page
 
 <img src="screenshots/AccessDenied.png" alt="AccessDenied Page" width="100%" height="600"  />

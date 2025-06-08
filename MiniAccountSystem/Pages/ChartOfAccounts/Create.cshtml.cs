@@ -19,15 +19,22 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
 
         public List<ChartOfAccount> ParentAccounts { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            // Add this authorization check at the beginning
+            if (User.IsInRole("Viewer") || User.IsInRole("Accountant"))
+            {
+                return RedirectToPage("/AccessDenied");
+            }
+
+            // Rest of your existing OnGet code remains the same
             ParentAccounts = new List<ChartOfAccount>();
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
-            ?? throw new ArgumentNullException("Connection string is missing!");
+                ?? throw new ArgumentNullException("Connection string is missing!");
             using var con = new SqlConnection(connectionString);
             var cmd = new SqlCommand(@"SELECT Id, Name FROM ChartOfAccounts 
-                             WHERE ParentId IS NULL
-                             ORDER BY Name", con);
+                         WHERE ParentId IS NULL
+                         ORDER BY Name", con);
             con.Open();
             var reader = cmd.ExecuteReader();
             ParentAccounts = new();
@@ -39,10 +46,17 @@ namespace MiniAccountSystem.Pages.ChartOfAccounts
                     Name = reader["Name"].ToString()
                 });
             }
+
+            return Page();
         }
 
         public IActionResult OnPost()
         {
+            if (User.IsInRole("Viewer") || User.IsInRole("Accountant"))
+            {
+                return RedirectToPage("/AccessDenied");
+            }
+
             if (!ModelState.IsValid)
                 return Page();
             string connectionString = _configuration.GetConnectionString("DefaultConnection")
